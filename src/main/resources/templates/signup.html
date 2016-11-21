@@ -5,9 +5,14 @@
 	<div th:replace = "base :: navigation"></div>
 	
 	<h1>Movies Home</h1>
-	<p>
-		<div th:text = "${fromController}"></div>
-	</p>
+	<form method="post">
+				
+		<label>Name</label><input name = "name"></input><br/>
+		<label>Password</label><input name = "password"></input>
+		<label>Zip</label><input name = "zip"></input>
+		<br/>
+		<button>Submit</button>
+	</form>
 	
 	<ul>
 		<li th:text = "${random}"></li>

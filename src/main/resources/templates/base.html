@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:fragment="header">
+		<title>Movies</title>
+		<link th:href="@{/css/styles.css}" rel="stylesheet" />
+		<script th:src="@{/js/script.js}"></script>
+	</head>	
+	
+	<body>
+	
+		<div th:fragment="navigation">
+			<p>this is from base</p>
+			<a href="/">Home</a><br/>
+			<a href="/signup">create account</a><br/>
+			<a href="/signin">sign in</a><br/>
+			<a href="/trending">trending movies</a><br/>
+			<a href="/userlist">user list</a><br/>
+			<a href="/">fill in</a><br/>
+			<a href="http://www.google.com">Google</a><br/>
+		</div>
+		
+		
+	</body>
+</html>
+	
