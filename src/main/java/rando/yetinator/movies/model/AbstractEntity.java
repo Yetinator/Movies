@@ -1,4 +1,4 @@
-package rando.yetinator.movies.model.dao;
+package rando.yetinator.movies.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

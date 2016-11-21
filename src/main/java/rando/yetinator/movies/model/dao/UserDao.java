@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import rando.yetinator.movies.MoviesApplication;
+
+import javax.transaction.Transactional;
 import rando.yetinator.movies.model.User;
 
 @Transactional
@@ -14,5 +14,7 @@ import rando.yetinator.movies.model.User;
 public interface UserDao extends CrudRepository<User, Integer>{
 	
 	public List<User> findAll();
+	
+	User findByUserName(String UserName);
 
 }

@@ -9,13 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import rando.yetinator.movies.model.User;
+import rando.yetinator.movies.model.dao.MovieDictionaryDao;
+import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
 
 @Controller
 public class AuthenticationController {
 	
 	@Autowired
-	private UserDao userDao;
+	private UserDao UserDao;
+	
+	@Autowired
+	private MovieLikeDao MovieLikeDao;
+	
+	@Autowired
+	private MovieDictionaryDao MovieDictionaryDao;
 
 	@RequestMapping("/")
 	public String home(Model model){
@@ -43,10 +51,34 @@ public class AuthenticationController {
 		//int zip = Integer.getInteger(arequest.getParameter("zip"));
 		//TODO - some error checking and password checking
 		User newUser = new User(name, password, zip);
-		userDao.save(newUser);
+		UserDao.save(newUser);
 		//log user in for signup?
 		
 		model.addAttribute("fromController", "posted");
+		return "home";
+	}
+	
+	@RequestMapping(value = "/signin", method = RequestMethod.GET )
+	public String signin(Model model){
+		
+		model.addAttribute("random", "This is working");
+		
+		return "signin";
+	}
+	@RequestMapping(value = "/signin", method = RequestMethod.POST )
+	public String signedIn (Model model, HttpServletRequest arequest){
+		String name = arequest.getParameter("name");
+		String password = arequest.getParameter("password");
+		//TODO - bad user??
+		User currentUser = UserDao.findByUserName(name);
+		if(currentUser.checkHash(password)){
+			//log on! How did this work in blogz again?? 
+			model.addAttribute("random", "Should be signed in???");
+			
+		}else{
+			//error logging on!
+		}
+		
 		return "home";
 	}
 }

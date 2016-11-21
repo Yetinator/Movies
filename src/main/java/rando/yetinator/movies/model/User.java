@@ -7,8 +7,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import rando.yetinator.movies.model.dao.AbstractEntity;
-
 @Entity  //import form java persistence
 @Table(name = "user")
 public class User extends AbstractEntity {
@@ -72,6 +70,11 @@ public class User extends AbstractEntity {
 	//I totally copied this hashing from blogz, look this up later
 	private static String hashPassword(String password) {		
 		return encoder.encode(password);
+	}
+	public boolean checkHash(String password){
+		//also copied from blogz.  Why encoder.matches?  why can't I just hash it again? 
+		return encoder.matches(password, passwordHash);
+		
 	}
 	
 
