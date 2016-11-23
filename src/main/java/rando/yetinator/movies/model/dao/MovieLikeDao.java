@@ -13,6 +13,6 @@ import rando.yetinator.movies.model.MovieLike;
 @Repository
 public interface MovieLikeDao extends CrudRepository<MovieLike, Integer>{
 	public List<MovieLike> findAll();
-	public MovieLike FindByuid(int uid);
+	public MovieLike findByUid(int uid);
 	
 }

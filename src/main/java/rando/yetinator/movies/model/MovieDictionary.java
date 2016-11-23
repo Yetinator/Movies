@@ -47,5 +47,12 @@ public class MovieDictionary extends AbstractEntity {
 		this.actors = actors;
 	}*/
 	
+	public static boolean validMovie(String title) {
+		//TODO - something with this
+		if(!title.equals("") && !title.equals(null))
+			return true;
+		return false;
+	}
+	
 	
 }
