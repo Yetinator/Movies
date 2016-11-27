@@ -1,6 +1,7 @@
 package rando.yetinator.movies.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,16 +15,16 @@ import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
 
 @Controller
-public class AuthenticationController {
+public class AuthenticationController extends AbstractController{
 	
-	@Autowired
-	private UserDao UserDao;
+	//@Autowired
+	//private UserDao UserDao;
 	
-	@Autowired
-	private MovieLikeDao MovieLikeDao;
+	//@Autowired
+	//private MovieLikeDao MovieLikeDao;
 	
-	@Autowired
-	private MovieDictionaryDao MovieDictionaryDao;
+	//@Autowired
+	//private MovieDictionaryDao MovieDictionaryDao;
 
 	@RequestMapping("/")
 	public String home(Model model){
@@ -50,11 +51,12 @@ public class AuthenticationController {
 		//System.out.println(zip);
 		//int zip = Integer.getInteger(arequest.getParameter("zip"));
 		//TODO - some error checking and password checking
+		//TODO - error check input for zipcode
 		User newUser = new User(name, password, zip);
 		UserDao.save(newUser);
 		//log user in for signup?
 		
-		model.addAttribute("fromController", "posted");
+		model.addAttribute("fromController", "new user created");
 		return "home";
 	}
 	
@@ -73,6 +75,8 @@ public class AuthenticationController {
 		User currentUser = UserDao.findByUserName(name);
 		if(currentUser.checkHash(password)){
 			//log on! How did this work in blogz again?? 
+			HttpSession session = arequest.getSession();
+			setUserInSession(session, currentUser);
 			model.addAttribute("random", "Should be signed in???");
 			
 		}else{

@@ -1,0 +1,53 @@
+h1 {
+	color: #F0810F;
+	background: #063852;
+	display: block;
+	text-shadow: 3px 2px 3px #E6DF44;
+}
+
+p {
+	background:#063852;
+	color:#E6DF44;
+	
+}
+
+div {
+	background:#063852;
+	color:#E6DF44;
+}
+body {
+	border:5px #063852 solid;
+    display: block;
+    margin:auto;
+    background: #063852;
+    color: #E6DF44;
+}
+
+#navigation {
+	background: #011A27;
+	color: #E6DF44;
+	text-align: left;
+}
+
+button {
+	background: #F0810F;
+}
+
+.color1 {
+	background: #011A27;
+	color: #E6DF44;
+}
+
+a:link {
+    
+    color:#F0810F;
+}
+
+a:visited {
+    text-decoration: none;
+    color:#F0810F;
+}
+
+a:hover {
+    color: red;
+}

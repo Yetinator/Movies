@@ -1,7 +1,11 @@
 package rando.yetinator.movies.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +18,7 @@ public class User extends AbstractEntity {
 	private String userName;
 	private String passwordHash;
 	private int zipcode;
+	//private List<MovieLike> Likes;
 	private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	public User() {}
@@ -25,6 +30,7 @@ public class User extends AbstractEntity {
 		this.userName = userName;
 		this.passwordHash = hashPassword(password);
 		this.zipcode = zipcode;
+		
 	}
 	
 	
@@ -76,8 +82,19 @@ public class User extends AbstractEntity {
 		return encoder.matches(password, passwordHash);
 		
 	}
-	
-
+	/*
+	@OneToMany
+	@JoinColumn(name="user_uid")
+	public List<MovieLike> getLikes(){
+		return Likes;
+	}
+	*/
+	/*
+	public void addLike(MovieLike movieLike){
+		//TODO - understand this implementation
+		
+	}
+*/
 	
 	
 }

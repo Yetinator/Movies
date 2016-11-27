@@ -8,8 +8,16 @@
 	<br/>
 	<h2>Pick a movie</h2>
 	<form method = "post">
-		<!-- This is where a for loop goes with available movies It should come from an array queried to not suck -->
-		<div th:each = "movie : ${movies}"><button name = "movieTitle" th:value = "${movie.title}" th:text="${movie.title}"></button></div>
+		<!-- This is where a for loop goes with available movies It should come from an array queried to not suck 
+		<div th:each = "movie : ${movies}"><button name = "movieTitle" th:value = "${movie.title}" th:text="${movie.title}"></button></div>-->
+		<select name = "movieTitle">
+			
+				<option th:each = "movie : ${movies}" th:value = "${movie.title}" th:text="${movie.title}"></option>
+		
+		</select>
+		<br/>
+		<br/>
+		<button>Submit DropDown</button>
 	</form>
 	<h2>Or you can create your own</h2>
 	<form method = "post">

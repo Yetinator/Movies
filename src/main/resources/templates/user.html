@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace = "base :: header"></header>
+<body>
+	<div th:replace = "base :: navigation"></div>
+	
+	<h1 th:text="${userTemplateTitle}"></h1>
+	<p>
+		<div th:each = "user : ${usersList}">
+			<p th:text = "${user.userName}">problem</p>
+		</div>
+	</p>
+
+</body>
+</html>

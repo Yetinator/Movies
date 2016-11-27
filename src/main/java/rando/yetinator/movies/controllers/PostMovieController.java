@@ -18,21 +18,22 @@ import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
 
 @Controller
-public class PostMovieController {
+public class PostMovieController extends AbstractController{
 
-	@Autowired
-	private UserDao UserDao;
+	//@Autowired
+	//private UserDao UserDao;
 	
-	@Autowired
-	private MovieLikeDao MovieLikeDao;
+	//@Autowired
+	//private MovieLikeDao MovieLikeDao;
 	
-	@Autowired
-	private MovieDictionaryDao MovieDictionaryDao;
+	//@Autowired
+	//private MovieDictionaryDao MovieDictionaryDao;
 
 	@RequestMapping("/trending")
 	public String trending(Model model){
-		//TODO - make this only accessible to registered users(make everything but signup only accessible to registered users.  
+		//make this only accessible to registered users(make everything but signup only accessible to registered users.  
 		//model.addAttribute("random", "trending");
+		//TODO - narrow this to a list of the most popular or order by popularity
 		List<MovieLike> movies = MovieLikeDao.findAll();
 		
 		model.addAttribute("movies", movies);
@@ -45,10 +46,11 @@ public class PostMovieController {
 		
 		String title = arequest.getParameter("movieTitle");
 		if(MovieDictionary.validMovie(title)){
-			//TODO - save a movieLike to someone other than Mike ie: uid == 3
+			//save a movieLike to someone other than Mike ie: uid == 3
+			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
 			System.out.println(title);
-			User user = UserDao.findByuid(3);
-			MovieLike like = new MovieLike(3, title, user);
+			User user = UserDao.findByuid(useridloggedin);
+			MovieLike like = new MovieLike(useridloggedin, title, user);
 			MovieLikeDao.save(like);
 			System.out.println(like.getUser().getUserName());
 			model.addAttribute("random", "Post trending");
@@ -61,4 +63,21 @@ public class PostMovieController {
 		
 		return "home";
 	}
+	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
+	public String userList(Model model, HttpServletRequest arequest){
+		
+		List<User> users = UserDao.findAll();
+		//List<String> names;
+		/*
+		 for(User user : users){
+			names.add(user.getUserName());
+		}
+		*/
+		model.addAttribute("userTemplateTitle", "All Users");
+		model.addAttribute("usersList", users);
+		
+		return "user";
+	}
+	
+	
 }
