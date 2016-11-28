@@ -20,16 +20,16 @@ public class MovieLike extends AbstractEntity{
 	private User user;
 	private String title;
 	private Date created;
-	private Integer userId;
+	//private Integer userId; Removed
 	private List<User> users;
 	//private List<Integer> friendUserIds;
-	
-	public MovieLike(int userId, String title, User user) {
+	//Removed from below int userId, 
+	public MovieLike(String title, User user) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.created = new Date();
-		this.userId = userId;
+		//this.userId = userId; Removed
 		//this.friendUserIds = friendUserIds;
 	}
 	public MovieLike(){}
@@ -65,6 +65,7 @@ public class MovieLike extends AbstractEntity{
 	/*public void setFriendUserIds(List<Integer> friendUserIds) {
 		this.friendUserIds = friendUserIds;
 	}*/
+	/* Removed
 	@NotNull
     @Column(name = "userId")
 	public Integer getUserId() {
@@ -73,10 +74,10 @@ public class MovieLike extends AbstractEntity{
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
+	*/
 	//TODO - DECIDE ABOUT USABAILITY OF FOLLOWING
 	@OneToMany
-	@JoinColumn(name="userId")
+	@JoinColumn(name="user_uid")
 	public List<User> getUsers(){
 		return users;
 	}

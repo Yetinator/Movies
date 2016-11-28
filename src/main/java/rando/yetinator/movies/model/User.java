@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class User extends AbstractEntity {
 	private String userName;
 	private String passwordHash;
 	private int zipcode;
+	private MovieLike like;
 	//private List<MovieLike> Likes;
 	private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
@@ -57,6 +59,11 @@ public class User extends AbstractEntity {
 	public int getzipcode() {
 		return zipcode;
 	}
+	
+	@ManyToOne
+	public MovieLike getLike(){
+		return like;
+	}
 	/**
 	 * @param userName the userName to set
 	 */
@@ -73,6 +80,11 @@ public class User extends AbstractEntity {
 		this.zipcode = zipcode;
 	}
 	
+
+	public void setLike(MovieLike like){
+		this.like = like;
+	}
+	
 	//I totally copied this hashing from blogz, look this up later
 	private static String hashPassword(String password) {		
 		return encoder.encode(password);
@@ -80,8 +92,8 @@ public class User extends AbstractEntity {
 	public boolean checkHash(String password){
 		//also copied from blogz.  Why encoder.matches?  why can't I just hash it again? 
 		return encoder.matches(password, passwordHash);
-		
-	}
+	}	
+	
 	/*
 	@OneToMany
 	@JoinColumn(name="user_uid")

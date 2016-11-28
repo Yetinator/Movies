@@ -34,7 +34,8 @@ public class PostMovieController extends AbstractController{
 		//make this only accessible to registered users(make everything but signup only accessible to registered users.  
 		//model.addAttribute("random", "trending");
 		//TODO - narrow this to a list of the most popular or order by popularity
-		List<MovieLike> movies = MovieLikeDao.findAll();
+		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
+		List<MovieLike> movies = MovieLikeDao.findAll(a);
 		
 		model.addAttribute("movies", movies);
 		
@@ -50,7 +51,8 @@ public class PostMovieController extends AbstractController{
 			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
 			System.out.println(title);
 			User user = UserDao.findByuid(useridloggedin);
-			MovieLike like = new MovieLike(useridloggedin, title, user);
+			//Removed from below useridloggedin, 
+			MovieLike like = new MovieLike(title, user);
 			MovieLikeDao.save(like);
 			System.out.println(like.getUser().getUserName());
 			model.addAttribute("random", "Post trending");
@@ -60,7 +62,7 @@ public class PostMovieController extends AbstractController{
 		
 		
 		
-		
+		//TODO - change to a list of trending movies?  
 		return "home";
 	}
 	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
