@@ -6,8 +6,8 @@
 	
 	<h1 th:text="${userTemplateTitle}"></h1>
 	<p>
-		<div th:each = "user : ${usersList}">
-			<p th:text = "${user.userName}">problem</p>
+		<div th:each = "movie : ${movieList}">
+			<p th:text = "${movie.title}">problem</p>
 		</div>
 	</p>
 

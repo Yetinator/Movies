@@ -75,7 +75,9 @@ public class MovieLike extends AbstractEntity{
 		this.userId = userId;
 	}
 	*/
-	//TODO - DECIDE ABOUT USABAILITY OF FOLLOWING
+	//TODO - DECIDE ABOUT USABAILITY OF FOLLOWING (probably need another table to link users and movie...likes
+	// is this redundant?  A list of users for a movielike.  but there is one user until I get to movie dictionary...
+	//This will probably be removed or refactored to movieDictionary
 	@OneToMany
 	@JoinColumn(name="user_uid")
 	public List<User> getUsers(){

@@ -4,18 +4,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
 import rando.yetinator.movies.model.User;
-import rando.yetinator.movies.model.dao.MovieDictionaryDao;
-import rando.yetinator.movies.model.dao.MovieLikeDao;
-import rando.yetinator.movies.model.dao.UserDao;
 
 @Controller
 public class PostMovieController extends AbstractController{
@@ -53,6 +50,8 @@ public class PostMovieController extends AbstractController{
 			User user = UserDao.findByuid(useridloggedin);
 			//Removed from below useridloggedin, 
 			MovieLike like = new MovieLike(title, user);
+			//user.setLike(like);//TODO - GET RID OF THIS
+			user.addLike(like);
 			MovieLikeDao.save(like);
 			System.out.println(like.getUser().getUserName());
 			model.addAttribute("random", "Post trending");
@@ -65,6 +64,8 @@ public class PostMovieController extends AbstractController{
 		//TODO - change to a list of trending movies?  
 		return "home";
 	}
+	
+	//TODO - Probably should be moved to a new controller
 	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
 	public String userList(Model model, HttpServletRequest arequest){
 		
@@ -77,6 +78,21 @@ public class PostMovieController extends AbstractController{
 		*/
 		model.addAttribute("userTemplateTitle", "All Users");
 		model.addAttribute("usersList", users);
+		
+		return "usersAll";
+	}
+	
+	@RequestMapping(value = "/user/{UserName}", method = RequestMethod.GET)
+	public String userSingle(@PathVariable String UserName, Model model, HttpServletRequest arequest){
+		
+		User user = UserDao.findByUserName((String) UserName);
+		
+		//find list of movies
+		List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
+
+		model.addAttribute("userTemplateTitle", user.getUserName());
+		model.addAttribute("user", user);
+		model.addAttribute("movieList", movieList);
 		
 		return "user";
 	}

@@ -8,6 +8,7 @@ import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.dao.MovieDictionaryDao;
 import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
+import rando.yetinator.movies.model.dao.UserFriendsListDao;
 
 public abstract class AbstractController {
 	//Borrowed from blogz Assignment
@@ -18,7 +19,11 @@ public abstract class AbstractController {
 	@Autowired
 	protected MovieLikeDao MovieLikeDao;
 	
-	@Autowired MovieDictionaryDao MovieDictionaryDao;
+	@Autowired 
+	protected MovieDictionaryDao MovieDictionaryDao;
+	
+	@Autowired 
+	protected UserFriendsListDao UserFriendsListDao;
 
     public static final String userSessionKey = "user_id";
 

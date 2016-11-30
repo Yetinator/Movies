@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -19,8 +19,9 @@ public class User extends AbstractEntity {
 	private String userName;
 	private String passwordHash;
 	private int zipcode;
-	private MovieLike like;
-	//private List<MovieLike> Likes;
+	//private MovieLike like;
+	private List<MovieLike> likes;
+	//private List<UserFriendsList> friends;
 	private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	public User() {}
@@ -32,6 +33,7 @@ public class User extends AbstractEntity {
 		this.userName = userName;
 		this.passwordHash = hashPassword(password);
 		this.zipcode = zipcode;
+		
 		
 	}
 	
@@ -60,10 +62,10 @@ public class User extends AbstractEntity {
 		return zipcode;
 	}
 	
-	@ManyToOne
+	/*
 	public MovieLike getLike(){
 		return like;
-	}
+	}*/
 	/**
 	 * @param userName the userName to set
 	 */
@@ -80,11 +82,11 @@ public class User extends AbstractEntity {
 		this.zipcode = zipcode;
 	}
 	
-
+	/*
 	public void setLike(MovieLike like){
 		this.like = like;
 	}
-	
+	*/
 	//I totally copied this hashing from blogz, look this up later
 	private static String hashPassword(String password) {		
 		return encoder.encode(password);
@@ -95,18 +97,36 @@ public class User extends AbstractEntity {
 	}	
 	
 	/*
+	
 	@OneToMany
-	@JoinColumn(name="user_uid")
-	public List<MovieLike> getLikes(){
-		return Likes;
+	@JoinColumn(name="user_one")
+	public List<UserFriendsList> getFriends() {
+		return friends;
 	}
-	*/
-	/*
-	public void addLike(MovieLike movieLike){
-		//TODO - understand this implementation
-		
+
+	public void setFriends(List<UserFriendsList> friends) {
+		this.friends = friends;
 	}
 */
+	@OneToMany
+	@JoinColumn(name="user_uid")//this creates a column user_id in the other table
+	public List<MovieLike> getLikes(){
+		return likes;
+	}
+	
+	
+	public void addLike(MovieLike movieLike){
+		//TODO - understand this implementation
+		likes.add(movieLike);
+	}
+	/*
+	public void addFriendList(UserFriendsList UserFriendsList){
+		friends.add(UserFriendsList);
+	}
+*/
+	public void setLikes(List<MovieLike> likes) {
+		this.likes = likes;
+	}
 	
 	
 }
