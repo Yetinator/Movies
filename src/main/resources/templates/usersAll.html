@@ -7,7 +7,7 @@
 	<h1 th:text="${userTemplateTitle}"></h1>
 	<p>
 		<div th:each = "user : ${usersList}">
-			<a href="/user/${user.userName}" th:text = "${user.userName}">problem</a>
+			<a th:href="'/user/' + ${user.userName}" th:text = "${user.userName}">problem</a>
 		</div>
 	</p>
 
