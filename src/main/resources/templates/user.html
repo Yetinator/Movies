@@ -10,6 +10,19 @@
 			<p th:text = "${movie.title}">problem</p>
 		</div>
 	</p>
+	<form method="post">
+		<label>Would you like to friend this friend?</label><br/>
+			<button th:text = "'Friend ' + ${user.userName} + '?'" th:value = "${user.uid}" name = "userid">
+			
+			</button>
+			<br/>
+	</form> 
+	<p>This user's friends are:  
+		<div th:each = "friend : ${friends}">
+			<p th:text = "${friend.userName}">
+			</p>	
+		</div>
+	</p>
 
 </body>
 </html>

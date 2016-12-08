@@ -56,8 +56,9 @@ public class AuthenticationController extends AbstractController{
 		UserDao.save(newUser);
 		//log user in for signup?
 		
+		
 		model.addAttribute("fromController", "new user created");
-		return "home";
+		return "redirect:/signin";
 	}
 	
 	@RequestMapping(value = "/signin", method = RequestMethod.GET )
@@ -77,6 +78,7 @@ public class AuthenticationController extends AbstractController{
 			//log on! How did this work in blogz again?? 
 			HttpSession session = arequest.getSession();
 			setUserInSession(session, currentUser);
+			//this attribute is for the home link
 			model.addAttribute("random", "Should be signed in???");
 			
 		}else{
@@ -84,5 +86,11 @@ public class AuthenticationController extends AbstractController{
 		}
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/signout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+		return "redirect:/";
 	}
 }

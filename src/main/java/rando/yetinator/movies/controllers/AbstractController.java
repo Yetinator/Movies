@@ -3,6 +3,7 @@ package rando.yetinator.movies.controllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.dao.MovieDictionaryDao;
@@ -36,5 +37,12 @@ public abstract class AbstractController {
     protected void setUserInSession(HttpSession session, User user) {
     	session.setAttribute(userSessionKey, user.getUid());
     }
+    
+    /*
+      protected void setupPage(Model model, HttpSession session) {
+     
+    	model.addAttribute("loggedOnName", getUserFromSession(session).getUserName());
+    }
+*/
 	
 }

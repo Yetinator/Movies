@@ -1,5 +1,6 @@
 package rando.yetinator.movies.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,18 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
 import rando.yetinator.movies.model.User;
+import rando.yetinator.movies.model.UserFriendsList;
 
 @Controller
 public class PostMovieController extends AbstractController{
 
-	//@Autowired
-	//private UserDao UserDao;
-	
-	//@Autowired
-	//private MovieLikeDao MovieLikeDao;
-	
-	//@Autowired
-	//private MovieDictionaryDao MovieDictionaryDao;
 
 	@RequestMapping("/trending")
 	public String trending(Model model){
@@ -36,7 +30,8 @@ public class PostMovieController extends AbstractController{
 		
 		model.addAttribute("movies", movies);
 		
-		return "trending";
+		//return "trending";
+		return "testing";
 	}
 	
 	@RequestMapping(value = "/trending", method = RequestMethod.POST)
@@ -89,12 +84,46 @@ public class PostMovieController extends AbstractController{
 		
 		//find list of movies
 		List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
+		
+		//list of friends
+		List<UserFriendsList> friendNums = UserFriendsListDao.findByUserOne(user.getUid());
+		List<User> friends = new ArrayList<User>();
+		for(UserFriendsList i : friendNums){
+			int uid = i.getUserTwo();
+			User it = UserDao.findByuid(uid);
+			friends.add(it);
+		}
 
 		model.addAttribute("userTemplateTitle", user.getUserName());
 		model.addAttribute("user", user);
 		model.addAttribute("movieList", movieList);
+		model.addAttribute("friends", friends);
 		
 		return "user";
+	}
+	
+	@RequestMapping(value = "/user/{UserName}", method = RequestMethod.POST)
+	public String userFriend(@PathVariable String UserName, Model model, HttpServletRequest arequest){
+		User user = UserDao.findByUserName((String) UserName);
+		
+		//Create Friends Entry in database
+		int frienduserid = Integer.parseInt(arequest.getParameter("userid"));
+		User currentUser = getUserFromSession(arequest.getSession());
+		UserFriendsList friendEntry = new UserFriendsList(currentUser.getUid(),  frienduserid);
+		UserFriendsListDao.save(friendEntry);
+		
+		/*
+		//find list of movies
+		List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
+
+		model.addAttribute("userTemplateTitle", user.getUserName());
+		model.addAttribute("user", user);
+		model.addAttribute("movieList", movieList);
+		//model.addAttribute("friends", "You are friends with ");
+		return "user";
+		*/
+		return "redirect:/user/" + UserName;
+		
 	}
 	
 	
