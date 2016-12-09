@@ -39,7 +39,7 @@ public class PostMovieController extends AbstractController{
 		
 		String title = arequest.getParameter("movieTitle");
 		if(MovieDictionary.validMovie(title)){
-			//save a movieLike to someone other than Mike ie: uid == 3
+			//save a movieLike after post request
 			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
 			System.out.println(title);
 			User user = UserDao.findByuid(useridloggedin);
@@ -83,9 +83,12 @@ public class PostMovieController extends AbstractController{
 		User user = UserDao.findByUserName((String) UserName);
 		
 		//find list of movies
-		List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
+		//List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
+		List<MovieLike> movieList = user.getLikes();
+		//TODO - SORT
 		
 		//list of friends
+		/*
 		List<UserFriendsList> friendNums = UserFriendsListDao.findByUserOne(user.getUid());
 		List<User> friends = new ArrayList<User>();
 		for(UserFriendsList i : friendNums){
@@ -93,11 +96,23 @@ public class PostMovieController extends AbstractController{
 			User it = UserDao.findByuid(uid);
 			friends.add(it);
 		}
+		*/
+		//alternate list of friends
+		List<User> friends = user.getFriends();
+		
+		
+		//test to see if logged in is friends with page owner
+		boolean notFriendsAlready = true;
+		if(false){
+			//TODO - if logged in user friends list contains "user" from above set notFriendsAlready to false;
+		}
+		
 
 		model.addAttribute("userTemplateTitle", user.getUserName());
 		model.addAttribute("user", user);
 		model.addAttribute("movieList", movieList);
 		model.addAttribute("friends", friends);
+		model.addAttribute("notFriendsAlready", notFriendsAlready);
 		
 		return "user";
 	}
@@ -111,6 +126,8 @@ public class PostMovieController extends AbstractController{
 		User currentUser = getUserFromSession(arequest.getSession());
 		UserFriendsList friendEntry = new UserFriendsList(currentUser.getUid(),  frienduserid);
 		UserFriendsListDao.save(friendEntry);
+		User friendUser = UserDao.findByuid(1);
+		currentUser.addFriend(friendUser);
 		
 		/*
 		//find list of movies

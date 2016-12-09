@@ -2,7 +2,7 @@ h1 {
 	color: #F0810F;
 	background: #063852;
 	display: block;
-	text-shadow: 3px 2px #E6DF44;
+	text-shadow: 3px 2px 3px #E6DF44;
 }
 
 p {
@@ -27,6 +27,32 @@ body {
 	background: #011A27;
 	color: #E6DF44;
 	text-align: left;
+}
+
+#friendList {
+	width: 300px;
+    border: 10px solid #072D00;
+    padding: 25px;
+    margin: 25px;
+	vertical-align: top;   
+    display: inline-block;
+    
+	background: #063852;
+	color: black;
+	text-shadow: 3px 2px 3px #072D00;
+}
+
+#movieList {
+	width: 300px;
+    border: 10px solid #072D00;
+    padding: 25px;
+    margin: 25px;
+	vertical-align: top;   
+    display: inline-block;
+    
+	background: #063852;
+	color: black;
+	text-shadow: 3px 2px 3px #072D00;
 }
 
 button {

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,7 +22,7 @@ public class User extends AbstractEntity {
 	private int zipcode;
 	//private MovieLike like;
 	private List<MovieLike> likes;
-	//private List<UserFriendsList> friends;
+	private List<User> friends;
 	private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	public User() {}
@@ -33,6 +34,7 @@ public class User extends AbstractEntity {
 		this.userName = userName;
 		this.passwordHash = hashPassword(password);
 		this.zipcode = zipcode;
+		
 		
 		
 	}
@@ -96,18 +98,21 @@ public class User extends AbstractEntity {
 		return encoder.matches(password, passwordHash);
 	}	
 	
-	/*
 	
-	@OneToMany
-	@JoinColumn(name="user_one")
-	public List<UserFriendsList> getFriends() {
+	
+	@ManyToMany
+	//@JoinColumn(name="friend_id")
+	 @JoinTable(name = "user_friendss", 
+     joinColumns = @JoinColumn(name = "user_uid") 
+     ,inverseJoinColumns = @JoinColumn(name = "friend_uid"))
+	public List<User> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(List<UserFriendsList> friends) {
+	public void setFriends(List<User> friends) {
 		this.friends = friends;
 	}
-*/
+
 	@OneToMany
 	@JoinColumn(name="user_uid")//this creates a column user_id in the other table
 	public List<MovieLike> getLikes(){
@@ -118,6 +123,9 @@ public class User extends AbstractEntity {
 	public void addLike(MovieLike movieLike){
 		//TODO - understand this implementation
 		likes.add(movieLike);
+	}
+	public void addFriend(User friend){
+		this.friends.add(friend);
 	}
 	/*
 	public void addFriendList(UserFriendsList UserFriendsList){
