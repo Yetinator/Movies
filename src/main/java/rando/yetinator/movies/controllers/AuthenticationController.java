@@ -29,8 +29,8 @@ public class AuthenticationController extends AbstractController{
 	@RequestMapping("/")
 	public String home(Model model){
 		
-		model.addAttribute("random", "This is working");
-		
+		model.addAttribute("random", "Welcome to my fancy Movies page. ");
+		model.addAttribute("random2", "This is a sight where you can friend people with similar movie tastes and if you have a movie like in common a fellow movie goer will be recomended.");
 		return "home";
 	}
 	
@@ -64,7 +64,7 @@ public class AuthenticationController extends AbstractController{
 	@RequestMapping(value = "/signin", method = RequestMethod.GET )
 	public String signin(Model model){
 		
-		model.addAttribute("random", "This is working");
+		model.addAttribute("random", "You are signed in.");
 		
 		return "signin";
 	}
@@ -79,7 +79,7 @@ public class AuthenticationController extends AbstractController{
 			HttpSession session = arequest.getSession();
 			setUserInSession(session, currentUser);
 			//this attribute is for the home link
-			model.addAttribute("random", "Should be signed in???");
+			model.addAttribute("random", "You are signed in as " + name);
 			
 		}else{
 			//error logging on!

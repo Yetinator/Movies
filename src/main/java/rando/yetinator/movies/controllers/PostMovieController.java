@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import rando.yetinator.movies.MyHelper;
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.UserFriendsList;
+import rando.yetinator.movies.model.dao.UserFriendsListDao;
 
 @Controller
 public class PostMovieController extends AbstractController{
@@ -30,8 +32,8 @@ public class PostMovieController extends AbstractController{
 		
 		model.addAttribute("movies", movies);
 		
-		//return "trending";
-		return "testing";
+		return "trending";
+		//return "testing";
 	}
 	
 	@RequestMapping(value = "/trending", method = RequestMethod.POST)
@@ -79,26 +81,48 @@ public class PostMovieController extends AbstractController{
 	
 	@RequestMapping(value = "/user/{UserName}", method = RequestMethod.GET)
 	public String userSingle(@PathVariable String UserName, Model model, HttpServletRequest arequest){
+		//Allows you to view a user page and friend that user
 		
-		User user = UserDao.findByUserName((String) UserName);
+		User currentUser = getUserFromSession(arequest.getSession());
+		User userOnPage = UserDao.findByUserName((String) UserName);
 		
 		//find list of movies
 		//List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
-		List<MovieLike> movieList = user.getLikes();
+		List<MovieLike> movieList = userOnPage.getLikes();
 		//TODO - SORT
 		
 		//list of friends
-		/*
-		List<UserFriendsList> friendNums = UserFriendsListDao.findByUserOne(user.getUid());
+		List<UserFriendsList> friendNums = UserFriendsListDao.findByUserOne(userOnPage.getUid());
 		List<User> friends = new ArrayList<User>();
+		List<User> mutualFriends = new ArrayList<User>();
+		//create a list of friends using "userfriendlist" uid
 		for(UserFriendsList i : friendNums){
-			int uid = i.getUserTwo();
-			User it = UserDao.findByuid(uid);
-			friends.add(it);
+			int uidsOfUserOnPageFriends = i.getUserTwo();
+			User AFriendOfUserOnPage = UserDao.findByuid(uidsOfUserOnPageFriends);
+			friends.add(AFriendOfUserOnPage);
+			//mutual friends through helper class
+			if(MyHelper.AreMutualFriends(AFriendOfUserOnPage, currentUser, UserFriendsListDao)){
+				mutualFriends.add(AFriendOfUserOnPage);
+			}
+			
+			//mutual friends?
+			/*
+			//in a for loop with i being the current iteration
+			List<UserFriendsList> a = UserFriendsListDao.findByUserOne(uidsOfUserOnPageFriends);//This is all wrong
+			if(UserFriendsListDao.findByUserOne(uidsOfUserOnPageFriends) != null)
+				if()
+				mutualFriends.add(AFriendOfUserOnPage);
+			
+			*/
+			
+			//class based mutual friend function
+			/*
+			System.out.println("waldo1");
+			if(currentUser.isMutual(user))
+				mutualFriends.add(it);
+			*/
 		}
-		*/
-		//alternate list of friends
-		List<User> friends = user.getFriends();
+		
 		
 		
 		//test to see if logged in is friends with page owner
@@ -108,10 +132,11 @@ public class PostMovieController extends AbstractController{
 		}
 		
 
-		model.addAttribute("userTemplateTitle", user.getUserName());
-		model.addAttribute("user", user);
+		model.addAttribute("userTemplateTitle", userOnPage.getUserName());
+		model.addAttribute("user", userOnPage);
 		model.addAttribute("movieList", movieList);
 		model.addAttribute("friends", friends);
+		model.addAttribute("mutualFriends", mutualFriends);
 		model.addAttribute("notFriendsAlready", notFriendsAlready);
 		
 		return "user";
@@ -119,27 +144,35 @@ public class PostMovieController extends AbstractController{
 	
 	@RequestMapping(value = "/user/{UserName}", method = RequestMethod.POST)
 	public String userFriend(@PathVariable String UserName, Model model, HttpServletRequest arequest){
+		//this post method handles the friend match of a user after it has been requested.  
 		User user = UserDao.findByUserName((String) UserName);
 		
 		//Create Friends Entry in database
 		int frienduserid = Integer.parseInt(arequest.getParameter("userid"));
 		User currentUser = getUserFromSession(arequest.getSession());
+	//if list of entries for UserOne contains an entry that includes frienduser make an error message.
+		List<UserFriendsList> currentUserFriends = UserFriendsListDao.findByUserOne(currentUser.getUid());
+		for(UserFriendsList aFriend : currentUserFriends){
+			if(aFriend.getUserTwo() == frienduserid ){
+				model.addAttribute("random", "You are already friends with " + UserName + ".");
+				return "home";
+			}
+				
+		}
+		
+		//Create a line for friends list table
 		UserFriendsList friendEntry = new UserFriendsList(currentUser.getUid(),  frienduserid);
 		UserFriendsListDao.save(friendEntry);
-		User friendUser = UserDao.findByuid(1);
-		currentUser.addFriend(friendUser);
 		
-		/*
-		//find list of movies
-		List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
-
-		model.addAttribute("userTemplateTitle", user.getUserName());
-		model.addAttribute("user", user);
-		model.addAttribute("movieList", movieList);
-		//model.addAttribute("friends", "You are friends with ");
-		return "user";
-		*/
-		return "redirect:/user/" + UserName;
+		
+		//User friendUser = UserDao.findByuid(1);
+		//currentUser.addFriend(friendUser);//this is for user class based friend addition instead of 'userfriendlist' class
+		
+	
+		//return "redirect:/user/" + UserName;
+		
+		model.addAttribute("random", "You have friended " + UserName + ".");
+		return "home";
 		
 	}
 	

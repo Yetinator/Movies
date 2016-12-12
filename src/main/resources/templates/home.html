@@ -5,12 +5,10 @@
 	<div th:replace = "base :: navigation"></div>
 	
 	<h1>Movies Home</h1>
-	<p>
 		<div th:text = "${fromController}"></div>
+	<p th:text = "${random}">
 	</p>
-	
-	<ul>
-		<li th:text = "${random}"></li>
-	</ul>
+	<p th:text = "${random2}">
+	</p>
 </body>
 </html>

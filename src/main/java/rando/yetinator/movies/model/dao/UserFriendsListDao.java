@@ -16,5 +16,6 @@ public interface UserFriendsListDao extends CrudRepository<UserFriendsList, Inte
 	
 	public List<UserFriendsList> findAll();
 	//find by user one is users that user one friended but not people who friended user one back
-	public List<UserFriendsList> findByUserOne(int userOne);
+	public List<UserFriendsList> findByUserOne(int UserOne);
+	
 }
