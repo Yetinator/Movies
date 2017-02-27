@@ -1,14 +1,22 @@
 package rando.yetinator.movies.controllers;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import rando.yetinator.movies.model.MovieLike;
+import rando.yetinator.movies.model.MovieService;
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.dao.MovieDictionaryDao;
 import rando.yetinator.movies.model.dao.MovieLikeDao;
@@ -93,4 +101,56 @@ public class AuthenticationController extends AbstractController{
         request.getSession().invalidate();
 		return "redirect:/";
 	}
+	
+	//TODO - make a JSON controlled link to Movies API Database
+	@RequestMapping(value = "/API")//, method = RequestMethod.GET) Changed this up
+	public String APITest(HttpServletRequest request, Model model){
+		String apiKey = "e34f926e66fa7ffcaaea86c905cf10de";
+		String apiLink = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=Jack+Reacher";
+		//System.out.println("API Link is " + apiLink);
+		//Borrowed form /trending
+		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
+		List<MovieLike> movies = MovieLikeDao.findAll(a);
+		
+		model.addAttribute("movies", movies);
+		
+		//return "redirect:" + apiLink; 
+		return "testing";
+	}
+	@RequestMapping(value = "/API2", method = RequestMethod.POST)
+	public void API2(@RequestBody Map<String, Object> payload) 
+		    throws Exception {
+
+		  System.out.println(payload);
+
+		} 
+	/*
+	@RequestMapping(value = "/APIJava")//, method = RequestMethod.GET) Changed this up
+	public String APITestAgain(HttpServletRequest request, Model model){
+		String apiKey = "e34f926e66fa7ffcaaea86c905cf10de";
+		String apiLink = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=Jack+Reacher";
+		//System.out.println("API Link is " + apiLink);
+		//Borrowed form /trending
+		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
+		
+		var req = new XMLHttpRequest();
+		req.open("GET", "http://api.themoviedb.org/2.1/Movie.search/en/json/XXX/immortals?callback=foobar", true);
+		req.send();
+		req.onreadystatechange=function() {
+		   if (req.readyState==4 && req.status==200) {
+		      console.log(req.responseText); 
+		   }
+		}
+		
+		//return "redirect:" + apiLink; 
+		return "testing";
+	}
+	*/
+	/*
+	@RequestMapping("/testing2")
+	public @ResponseBody List<MovieService> performLooseSearch(@RequestParam("CHARS") String chars)
+	{
+		 
+		return exampleObjects;
+	}*/
 }

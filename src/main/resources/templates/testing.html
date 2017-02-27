@@ -1,26 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header th:replace = "base :: header"></header>
+<head>
+	<script type="text/javascript" src="webjars/jquery/3.1.1/dist/jquery.min.js"></script>
+    
+       
+    <script type="text/javascript"> 
+    
+        function doSearch() {
+            
+            $.getJSON ("https://api.themoviedb.org/3/search/movie?api_key=e34f926e66fa7ffcaaea86c905cf10de",
+            			{query: $('#searchBox').val()},
+            			
+            			function(data) {
+            				$('#resultss').text('');
+							
+							
+							for (var index in data) {
+								var thingOne = $("Object").serialize();
+							
+							    console.log(data);
+							    $(data.results).each(function(id, title){
+							    	$('#resultss').append(this.title);
+							    });
+						    	
+							}
+        				});
+        					
+        				
+        }
+        
+    </script>
+</head>
 <body>
 	<div th:replace = "base :: navigation"></div>
 	
-	<h1>These movies are trending</h1>
+	<h1>Testing API</h1>
 	<br/>
 	<h2>Pick a movie</h2>
 	<form method = "post">
 		<!-- This is where a for loop goes with available movies It should come from an array queried to not suck 
 		<div th:each = "movie : ${movies}"><button name = "movieTitle" th:value = "${movie.title}" th:text="${movie.title}"></button></div>-->
-		<input list = "movieTitle" name = "movieTitle">
-		<datalist id = "movieTitle">
-			
-				<option th:each = "movie : ${movies}" th:value = "${movie.title}" th:text="${movie.title}"></option>
 		
-		</datalist>
-		</input>
+		<h2>API</h2>
+		<input type="text" onKeyUp="doSearch();" id="searchBox"></input>
+		
 		<br/>
 		<br/>
 		<button>Submit DropDown</button>
+		<div id="resultss">
+			results will appear here
+		</div>
 	</form>
+	<div>
+		
+	</div>
 
 	
 

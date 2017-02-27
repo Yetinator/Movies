@@ -32,8 +32,9 @@ public class PostMovieController extends AbstractController{
 		
 		model.addAttribute("movies", movies);
 		
-		return "trending";
-		//return "testing";
+		return "testingagain";
+		//return "trending";
+		
 	}
 	
 	@RequestMapping(value = "/trending", method = RequestMethod.POST)

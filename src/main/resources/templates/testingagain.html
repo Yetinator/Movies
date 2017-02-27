@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace = "base :: header"></header>
+<body>
+	<div th:replace = "base :: navigation"></div>
+	
+	<script type="text/javascript" src="webjars/jquery/3.1.1/dist/jquery.min.js"></script>
+    
+       
+    <script type="text/javascript"> 
+    
+        function doSearch() {
+            
+            $.getJSON ("https://api.themoviedb.org/3/search/movie?api_key=e34f926e66fa7ffcaaea86c905cf10de",
+            			{query: $('#searchBox2').val()},
+            			
+            			function(data) {
+            				//$('#selection').text('');
+            				$('#menu').text('');
+							
+							
+
+						    //$(data.results).each(function(id, title){
+						    //	$('#selection').append("<option> " + this.title + "</option>");
+						    	
+						    $(data.results).each(function(id, title){
+						    	$('#menu').append("<option> " + this.title + "</option>");	
+						    	
+						    //try creating a list and then populating the list TODO	
+						    	
+						    });
+						    	
+							
+        				});
+        					
+        				
+        }
+        
+    </script>
+	
+	<h1>These movies are trending</h1>
+	<br/>
+	<h2>Pick a movie</h2>
+	<form method = "post">
+		<!-- This is where a for loop goes with available movies It should come from an array queried to not suck 
+		<div th:each = "movie : ${movies}"><button name = "movieTitle" th:value = "${movie.title}" th:text="${movie.title}"></button></div>-->
+		<input list = "movieTitle" name = "movieTitle" onKeyUp="doSearch();" id="searchBox2">
+		<datalist id = "movieTitle">
+			
+				<option th:each = "movie : ${movies}" th:value = "${movie.title}" th:text="${movie.title}"></option>
+				<option id = "menu" class = "FromDatabase"></option>
+		
+		</datalist>
+		</input>
+		<br/>
+		<br/>
+		<input type="text" onKeyUp="doSearch();" id="searchBox">
+		</input>
+		<!-- 
+		<div id = "selection">
+		
+		</div> -->
+		<br/>
+		<br/>
+		<button>Submit DropDown</button>
+	</form>
+
+	
+
+</body>
+</html>

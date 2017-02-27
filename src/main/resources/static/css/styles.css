@@ -55,6 +55,10 @@ body {
 	text-shadow: 3px 2px 3px #072D00;
 }
 
+.FromDatabase {
+	color: yellow;
+}
+
 button {
 	background: #F0810F;
 }
