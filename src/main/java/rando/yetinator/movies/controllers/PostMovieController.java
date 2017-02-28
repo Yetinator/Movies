@@ -177,5 +177,19 @@ public class PostMovieController extends AbstractController{
 		
 	}
 	
+	@RequestMapping(value = "/movie/{MovieName}", method = RequestMethod.GET)
+	public String moviePage(@PathVariable String MovieName, Model model, HttpServletRequest arequest){
+		//This maps a page displaying the movie and all its fun attributes and pictures and stuff
+		//TODO fill out movie page and add hyperlinks to user page
+		
+		
+		
+		model.addAttribute("movieTemplateTitle", MovieName);
+		
+		
+		return "movieDisplay";
+	}
+	
+	
 	
 }

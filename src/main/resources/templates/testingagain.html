@@ -10,13 +10,17 @@
     <script type="text/javascript"> 
     
         function doSearch() {
-            
+        
+        
+			        
             $.getJSON ("https://api.themoviedb.org/3/search/movie?api_key=e34f926e66fa7ffcaaea86c905cf10de",
             			{query: $('#searchBox2').val()},
             			
             			function(data) {
             				//$('#selection').text('');
-            				$('#menu').text('');
+            				$('#movieTitle').text('');
+            				//create or clear array
+							//var movieList = new Array();    
 							
 							
 
@@ -24,17 +28,19 @@
 						    //	$('#selection').append("<option> " + this.title + "</option>");
 						    	
 						    $(data.results).each(function(id, title){
-						    	$('#menu').append("<option> " + this.title + "</option>");	
-						    	
+						    	$('#movieTitle').append("<option> " + this.title + "</option>");	
+						    	//movieList.push(this.title);
 						    //try creating a list and then populating the list TODO	
-						    	
+						    //console.log(movieList);		
 						    });
-						    	
+						   
 							
         				});
         					
         				
         }
+        
+  
         
     </script>
 	
@@ -48,6 +54,7 @@
 		<datalist id = "movieTitle">
 			
 				<option th:each = "movie : ${movies}" th:value = "${movie.title}" th:text="${movie.title}"></option>
+				
 				<option id = "menu" class = "FromDatabase"></option>
 		
 		</datalist>

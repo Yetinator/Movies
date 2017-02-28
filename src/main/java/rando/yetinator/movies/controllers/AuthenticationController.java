@@ -103,6 +103,7 @@ public class AuthenticationController extends AbstractController{
 	}
 	
 	//TODO - make a JSON controlled link to Movies API Database
+	/*
 	@RequestMapping(value = "/API")//, method = RequestMethod.GET) Changed this up
 	public String APITest(HttpServletRequest request, Model model){
 		String apiKey = "e34f926e66fa7ffcaaea86c905cf10de";
@@ -123,7 +124,7 @@ public class AuthenticationController extends AbstractController{
 
 		  System.out.println(payload);
 
-		} 
+		} */
 	/*
 	@RequestMapping(value = "/APIJava")//, method = RequestMethod.GET) Changed this up
 	public String APITestAgain(HttpServletRequest request, Model model){
