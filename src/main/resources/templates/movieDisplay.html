@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
+
 <body>
 	<div th:replace = "base :: navigation"></div>
 	
-	
-	
-	<h1 th:text="${movieTemplateTitle}"></h1>
-	
-
+	<script type="text/javascript" src="../webjars/jquery/3.1.1/dist/jquery.min.js"></script>
+    
+       
+	<h1 th:text="${movieTemplateTitle}" >
+	</h1>
+	<div>put picture here
+	</div>
+	<p>Movie description here
+	</p>
+	<input type = "text" id = "searchBox2" onKeyUp="fillDataByTitle();">
+	</input>
 	
 
 </body>
