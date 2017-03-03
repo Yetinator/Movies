@@ -14,6 +14,8 @@
 	</div>
 	<p>Movie description here
 	</p>
+	<script type="text/javascript" >"${movieTemplateTitle}"</script>
+	<button th:onclick ="'fillDataByTitle(&quot;' + ${movieTemplateTitle} + '&quot;)'" type = "button" >click me</button>
 	<input type = "text" id = "searchBox2" onKeyUp="fillDataByTitle();">
 	</input>
 	
