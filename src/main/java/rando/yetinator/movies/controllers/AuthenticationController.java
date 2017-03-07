@@ -102,6 +102,16 @@ public class AuthenticationController extends AbstractController{
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/testing")
+	public String testing(HttpServletRequest request){
+		
+		MovieService Phil = new MovieService();
+		
+		System.out.println(Phil.testSomething());
+		
+		return "home";
+	}
+	
 	//TODO - make a JSON controlled link to Movies API Database
 	/*
 	@RequestMapping(value = "/API")//, method = RequestMethod.GET) Changed this up
