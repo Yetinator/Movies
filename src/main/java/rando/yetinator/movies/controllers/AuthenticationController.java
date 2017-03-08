@@ -105,9 +105,19 @@ public class AuthenticationController extends AbstractController{
 	@RequestMapping("/testing")
 	public String testing(HttpServletRequest request){
 		
-		MovieService Phil = new MovieService();
+		//String Jsonstuff = MovieService.testSomething();
 		
-		System.out.println(Phil.testSomething());
+		MovieService Phil = new MovieService("Jack+Reacher");
+		
+		System.out.println("The title is " + Phil.getTitle());
+		System.out.println("The description is " + Phil.getOverview());
+		System.out.println("the film id is: " + Phil.getId());
+		
+		//String Jsonstuff = Phil.testSomething();
+		
+		//System.out.println(Jsonstuff);
+		
+		//Phil.parseSomething(Jsonstuff);
 		
 		return "home";
 	}
