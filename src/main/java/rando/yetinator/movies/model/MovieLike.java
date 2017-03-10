@@ -19,19 +19,27 @@ public class MovieLike extends AbstractEntity{
 	//treat like posts
 	private User user;
 	private String title;
+	private int TMDBid;
 	private Date created;
 	//private Integer userId; Removed
 	private List<User> users;
 	//private List<Integer> friendUserIds;
 	//Removed from below int userId, 
-	public MovieLike(String title, User user) {
+	public MovieLike(String title, User user, int TMDBid) {
 		super();
 		this.user = user;
 		this.title = title;
 		this.created = new Date();
+		this.TMDBid = TMDBid;
 		//this.userId = userId; Removed
 		//this.friendUserIds = friendUserIds;
 	}
+	/*
+	public MovieLike(String title, User user, int TMDBid){
+		this.TMDBid = TMDBid;
+		MovieLike();
+	}
+	*/
 	public MovieLike(){}
 	
 	@ManyToOne
@@ -42,6 +50,10 @@ public class MovieLike extends AbstractEntity{
     @Column(name = "title")
 	public String getTitle() {
 		return title;
+	}
+	@Column(name = "TMDBid")
+	public int getTMDBid() {
+		return TMDBid;
 	}
 	@NotNull
     @Column(name = "create_date")
@@ -58,6 +70,9 @@ public class MovieLike extends AbstractEntity{
 	}//TODO - something with this to create a user from uid
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public void setTMDBid(int TMDBid){
+		this.TMDBid = TMDBid;
 	}
 	public void setCreated(Date created) {
 		this.created = created;

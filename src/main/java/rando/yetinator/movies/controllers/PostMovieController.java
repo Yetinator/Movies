@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import rando.yetinator.movies.ConfigData;
 import rando.yetinator.movies.MyHelper;
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
+import rando.yetinator.movies.model.MovieService;
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.UserFriendsList;
 import rando.yetinator.movies.model.dao.UserFriendsListDao;
@@ -41,13 +43,19 @@ public class PostMovieController extends AbstractController{
 	public String trendingPost(Model model, HttpServletRequest arequest){
 		
 		String title = arequest.getParameter("movieTitle");
-		if(MovieDictionary.validMovie(title)){
+		Integer TMDBid = null;
+		try{
+			TMDBid = Integer.getInteger(arequest.getParameter("TMDBid"));
+		}finally{
+			System.out.println("There is a problem with the TMDBid get parameter");
+		}
+		if(MovieDictionary.validMovie(title, TMDBid)){
 			//save a movieLike after post request
 			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
 			System.out.println(title);
 			User user = UserDao.findByuid(useridloggedin);
 			//Removed from below useridloggedin, 
-			MovieLike like = new MovieLike(title, user);
+			MovieLike like = new MovieLike(title, user, TMDBid);
 			//user.setLike(like);//TODO - GET RID OF THIS
 			user.addLike(like);
 			MovieLikeDao.save(like);
@@ -182,13 +190,25 @@ public class PostMovieController extends AbstractController{
 		//This maps a page displaying the movie and all its fun attributes and pictures and stuff
 		//TODO fill out movie page and add hyperlinks to user page
 		
+		//create movie object (need to pass in id)
+		//TODO IMPROVE MOVIE ID 
+		int movieId = 550;
+		MovieService movie = new MovieService(movieId);
+		ConfigData data = new ConfigData();
+		
+		String imageBaseUrl = data.getImageBaseURL(0);
+		//pass in movie object
 		
 		
 		model.addAttribute("movieTemplateTitle", MovieName);
+		model.addAttribute("movie", movie);
+		model.addAttribute("imageBaseUrl", imageBaseUrl);
 		
 		
 		return "movieDisplay";
 	}
+	
+	
 	
 	
 	

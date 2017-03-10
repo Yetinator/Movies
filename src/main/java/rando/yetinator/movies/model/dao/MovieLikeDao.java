@@ -19,4 +19,5 @@ public interface MovieLikeDao extends CrudRepository<MovieLike, Integer>{
 	public List<MovieLike> findAll(Sort sort);
 	public List<MovieLike> findByUserUid(int user_uid);
 	public List<MovieLike> findDistinctMovieLikeByTitleOrderByTitleAsc(String title);
+	//public List<MovieLike> findByTmdbid(int TMDBid);
 }

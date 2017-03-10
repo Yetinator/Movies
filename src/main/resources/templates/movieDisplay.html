@@ -10,15 +10,28 @@
        
 	<h1 th:text="${movieTemplateTitle}" >
 	</h1>
-	<div>put picture here
-	</div>
-	<p>Movie description here
+	<h1 th:text="${movie.title}" >
+	</h1>
+	<img th:src="${imageBaseUrl} + ${movie.poster_path}" alt="Movie Picture" >
+	</img>
+	<p th:text="${movie.overview}" style="width: 300px;" >Movie description here
 	</p>
 	<script type="text/javascript" >"${movieTemplateTitle}"</script>
-	<button th:onclick ="'fillDataByTitle(&quot;' + ${movieTemplateTitle} + '&quot;)'" type = "button" >click me</button>
-	<input type = "text" id = "searchBox2" onKeyUp="fillDataByTitle();">
-	</input>
 	
+	<form method = "post">
+	<!-- This should like a movie and route to /trending post -->
+		<label>Like this movie <div th:text = "${movie.title}"></div></label>
+		<button formaction="../trending" name="movieTitle" th:value="${movie.title}">submit</button>
+	</form>
+	
+	<form>
+	<!-- TODO- This should list friend who like this movie with the option to friend them-->
+	
+	</form>
+	<form>
+	<!-- TODO - This should allow me to schedule a time to watch the movie and create an invite -->
+	
+	</form>
 
 </body>
 </html>
