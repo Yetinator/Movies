@@ -24,21 +24,16 @@
 		
 		</datalist>
 		</input>
-		<input name = "TMDBid" type = "hidden" th:value = "${movie.TMDBid}"></input>
+		<input type = "hidden" name = "movieId" id = "idSubmit"></input>
+		<!--  <input name = "TMDBid" type = "hidden" th:value = "${movie.tmdbid}"></input>-->
+		<br/>
+		<div id = "finalList"></div>
 		<br/>
 		<br/>
-		<!--  
-		<input type="text" onKeyUp="doSearch();" id="searchBox">
-		</input>
-		-->
-		<!-- 
-		<div id = "selection">
-		
-		</div> -->
-		<br/>
-		<br/>
-		<button>Submit DropDown</button>
+		<button action = "/prepareSubmit();">Submit DropDown</button>
 	</form>
+	
+	
 
 	
 

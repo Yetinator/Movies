@@ -34,6 +34,7 @@ public class PostMovieController extends AbstractController{
 		
 		model.addAttribute("movies", movies);
 		
+		
 		return "testingagain";
 		//return "trending";
 		
@@ -42,13 +43,22 @@ public class PostMovieController extends AbstractController{
 	@RequestMapping(value = "/trending", method = RequestMethod.POST)
 	public String trendingPost(Model model, HttpServletRequest arequest){
 		
-		String title = arequest.getParameter("movieTitle");
+		//String title = arequest.getParameter("movieTitle");
 		Integer TMDBid = null;
 		try{
-			TMDBid = Integer.getInteger(arequest.getParameter("TMDBid"));
-		}finally{
+			String numString = arequest.getParameter("movieId");
+			System.out.println(numString);
+			TMDBid = Integer.parseInt(numString);
+			System.out.println(TMDBid);
+			
+			//TMDBid = Integer.getInteger(arequest.getParameter("movieId"));
+		}catch(Exception e){
 			System.out.println("There is a problem with the TMDBid get parameter");
 		}
+		//Create a movie object
+		MovieService movie = new MovieService(TMDBid);
+		String title = movie.getTitle();
+		
 		if(MovieDictionary.validMovie(title, TMDBid)){
 			//save a movieLike after post request
 			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
