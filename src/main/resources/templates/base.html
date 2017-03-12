@@ -4,6 +4,7 @@
 		<title>Movies</title>
 		<link th:href="@{/css/styles.css}" rel="stylesheet" />
 		<script th:src="@{/js/script.js}"></script>
+		<script type="text/javascript" src="../webjars/jquery/3.1.1/dist/jquery.min.js"></script>
 	</head>	
 	
 	<body>
@@ -12,16 +13,34 @@
 			<a href="/">Home</a><br/>
 			<a href="/signup">create account</a><br/>
 			<a href="/signin">sign in</a><br/>
-			<a href="/trending">trending movies</a><br/>
+			<a href="/trending">Select movies</a><br/>
 			<a href="/userlist">user list</a><br/>
 			<a href="/signout">Sign out</a>
+			<a href="/testing">Testing</a>
 			
 		</div>
 		<div th:text="${#httpSession.getAttribute('userSessionKey')}">
 		
 		</div>
 		
+		<div id="smallMovieDisplay" th:fragment="smallMovieDisplay">
+			<h1 th:text="${movieTemplateTitle}" >
+			</h1>
+			<h1 th:text="${movie.title}" >
+			</h1>
+			<img th:src="${imageBaseUrl} + ${movie.poster_path}" alt="Movie Picture" >
+			</img>
+			<p th:text="${movie.overview}" style="width: 300px;" >Movie description here
+			</p>
+			<script type="text/javascript" >"${movieTemplateTitle}"</script>
+		
+		
+		
+		</div>
+		
 		
 	</body>
 </html>
+
+
 	

@@ -119,7 +119,7 @@ public class AuthenticationController extends AbstractController{
 		
 		//Phil.parseSomething(Jsonstuff);
 		
-		return "home";
+		return "testing";
 	}
 	
 	//TODO - make a JSON controlled link to Movies API Database

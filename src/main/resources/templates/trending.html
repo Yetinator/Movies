@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
+
 <body>
 	<div th:replace = "base :: navigation"></div>
+	
+	<script type="text/javascript" src="webjars/jquery/3.1.1/dist/jquery.min.js"></script>
+    
+
 	
 	<h1>These movies are trending</h1>
 	<br/>
@@ -10,17 +15,25 @@
 	<form method = "post">
 		<!-- This is where a for loop goes with available movies It should come from an array queried to not suck 
 		<div th:each = "movie : ${movies}"><button name = "movieTitle" th:value = "${movie.title}" th:text="${movie.title}"></button></div>-->
-		<input list = "movieTitle" name = "movieTitle">
+		<input list = "movieTitle" name = "movieTitle" onKeyUp="doSearch();" id="searchBox2">
 		<datalist id = "movieTitle">
 			
 				<option th:each = "movie : ${movies}" th:value = "${movie.title}" th:text="${movie.title}"></option>
+				
+				<option id = "menu" class = "FromDatabase"></option>
 		
 		</datalist>
 		</input>
+		<input type = "hidden" name = "movieId" id = "idSubmit"></input>
+		<!--  <input name = "TMDBid" type = "hidden" th:value = "${movie.tmdbid}"></input>-->
+		<br/>
+		<div id = "finalList"></div>
 		<br/>
 		<br/>
-		<button>Submit DropDown</button>
+		<button action = "/prepareSubmit();">Submit DropDown</button>
 	</form>
+	
+	
 
 	
 

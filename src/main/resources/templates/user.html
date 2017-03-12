@@ -8,15 +8,16 @@
 	<div id="movieList">
 		<h2 th:text="${user.userName} + '\'s Movie List'"></h2>
 		<div th:each = "movie : ${movieList}">
-			<p th:text = "${movie.title}">problem</p>
+			<a th:href="@{../moviePage(movieId=${movie.tmdbid})}" th:text = "${movie.title}">problem</a>
 		</div>
 	</div>
+	
 	
 	<div id="friendList">
 		<h2 th:text="${user.userName} + '\'s Friend List'"></h2>
 		<div th:each = "friend : ${friends}">
-			<p th:text = "${friend.userName}">
-			</p>	
+			<a th:href="@{../user/{usrnm}(usrnm=${friend.userName})}" th:text = "${friend.userName}">
+			</a>	
 		</div>
 	</div>
 	<form method="post">

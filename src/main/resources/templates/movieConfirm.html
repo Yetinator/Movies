@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace = "base :: header"></header>
+
+<body>
+	<div th:replace = "base :: navigation"></div>
+	
+	<!-- movies loop to display movies of same title -->
+    <div th:each = "movie : ${movies}">
+  	<div th:replace = "base :: smallMovieDisplay"></div>
+  	<form method = "post" >
+  		<input type = "hidden" th:value = "${movie.id}" name = "movieId" ></input>
+  		<button formaction = "/movieLikeSelected">Like this movie</button>
+  	</form>
+	</div>
+	
+	
+</body>
+</html>

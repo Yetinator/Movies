@@ -2,6 +2,8 @@ package rando.yetinator.movies.model;
 
 
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +47,7 @@ public class MovieService {
 	//boolean video
 	//vote average
 	//vote count
-	
+	String APIKey = "e34f926e66fa7ffcaaea86c905cf10de";
 	
 	
 	
@@ -87,7 +89,6 @@ public class MovieService {
 		Map obj = parser.parseMap(JsonInput);
 		//System.out.println(obj.get("results"));
 		//Map obj = parser.parseMap(obj1.get("results").toString());
-		System.out.println("Waldo3");
 		//System.out.println(obj.get("results"));
 		
 		
@@ -115,8 +116,6 @@ public class MovieService {
 		//JSONObject implementation
 		JSONObject obj = new JSONObject(JsonInput);
 		
-		
-		System.out.println("Waldo3");
 		//System.out.println(obj.get("results"));
 		
 		
@@ -376,12 +375,52 @@ public class MovieService {
 			
 			
 		}catch(Exception e){
-			System.out.println("waldo");
+			System.out.println("bad waldo");
 			return null;
 		}
 	}
 	
-	protected String accessDbByName(String movieName){
+	public static int[] allMoviesOfName(String movieName){
+		
+		
+		//setup
+		String JsonInput = MovieService.accessDbByName(movieName);
+		JsonParser parser = new JsonJsonParser();
+		
+		//alternate parser?
+		//Map obj = parser.parseMap(JsonInput);
+		
+		//JSONObject implementation Create an array of results called Objects
+		JSONObject jsonObject = new JSONObject(JsonInput);
+		JSONArray Objects = (JSONArray) jsonObject.get("results");
+			
+		//the Array
+		int[] theList = new int[Objects.length()];
+		for(int i = 0; i < Objects.length(); i++){
+			//create a loop object to append
+			JSONObject loopObject = Objects.getJSONObject(i);
+			
+			
+			String idLocal = loopObject.get("id").toString();
+		
+		
+			//still need to parse the object and append
+			/*
+			System.out.println("this is befor object" + idLocal);
+			MovieService localObject = new MovieService(idLocal);
+			System.out.println("made an object" + localObject.getTitle() + localObject.getId());
+			//add to theList
+			theList[i] = localObject;
+			*/
+			
+			//just pass back the ids
+			theList[i] = Integer.parseInt(loopObject.get("id").toString());
+		}
+		
+		return theList;
+	}
+	
+	protected static String accessDbByName(String movieName){
 		//from youtube https://www.youtube.com/watch?v=lkbclq2nyfk
 		
 		String url = "https://api.themoviedb.org/3/search/movie?api_key=";
@@ -416,7 +455,7 @@ public class MovieService {
 			
 			
 		}catch(Exception e){
-			System.out.println("waldo");
+			System.out.println("There was a problem accessing JSON Data by name in MovieService.");
 			return null;
 		}
 	}
@@ -456,7 +495,7 @@ public class MovieService {
 			
 			
 		}catch(Exception e){
-			System.out.println("waldo");
+			System.out.println("bad waldo");
 			return null;
 		}
 	}

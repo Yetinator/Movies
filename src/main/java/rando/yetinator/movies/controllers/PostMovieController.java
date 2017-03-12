@@ -35,11 +35,84 @@ public class PostMovieController extends AbstractController{
 		model.addAttribute("movies", movies);
 		
 		
-		return "testingagain";
-		//return "trending";
+		
+		return "trendingJavaHeavy";
 		
 	}
 	
+	@RequestMapping(value = "/trending", method = RequestMethod.POST)
+	public String movieConfirm(Model model, HttpServletRequest arequest){
+		//There will often be more than one movie of the same title.  This confirms which one and returns
+		//the correct TMDBid
+		String title = arequest.getParameter("movieTitle");
+		//I need to create an array of MovieService objects to pass into my movieConfirm page for selection
+		//MovieService[] movies = MovieService.allMoviesOfName(title);
+		
+		int[] movieNumbers = MovieService.allMoviesOfName(title);
+		MovieService[] movies = new MovieService[movieNumbers.length]; 
+		for(int i = 0; i < movies.length; i++){
+			movies[i] = new MovieService(movieNumbers[i]);
+			
+		}
+		
+		MovieService tempMovie = new MovieService(155);
+		ConfigData data = new ConfigData();
+		
+		String imageBaseUrl = data.getImageBaseURL(0);
+		//pass in movie object
+		
+		model.addAttribute("movies", movies);
+		//model.addAttribute("movie", tempMovie);
+		model.addAttribute("imageBaseUrl", imageBaseUrl);
+		
+		//return "redirect:/movieLikeSelected";Nope, I need a page in between
+		return "movieConfirm";
+		//return "home";
+	}
+	
+	@RequestMapping(value = "/movieLikeSelected", method = RequestMethod.POST)
+	public String trendingPost(Model model, HttpServletRequest arequest){
+		
+		//String title = arequest.getParameter("movieTitle");
+		Integer TMDBid = null;
+		try{
+			String numString = arequest.getParameter("movieId");
+			System.out.println(numString);
+			TMDBid = Integer.parseInt(numString);
+			System.out.println(TMDBid);
+			
+			//TMDBid = Integer.getInteger(arequest.getParameter("movieId"));
+		}catch(Exception e){
+			System.out.println("There is a problem with the TMDBid get parameter");
+		}
+		//Create a movie object
+		MovieService movie = new MovieService(TMDBid);
+		String title = movie.getTitle();
+		
+		if(MovieDictionary.validMovie(title, TMDBid)){
+			//save a movieLike after post request
+			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
+			System.out.println(title);
+			User user = UserDao.findByuid(useridloggedin);
+			//Removed from below useridloggedin, 
+			MovieLike like = new MovieLike(title, user, TMDBid);
+			//user.setLike(like);//TODO - GET RID OF THIS
+			user.addLike(like);
+			MovieLikeDao.save(like);
+			System.out.println(like.getUser().getUserName());
+			model.addAttribute("random", "Post trending");
+		}else{
+			model.addAttribute("random", "Bad Post");
+		}
+		
+		
+		
+		//TODO - change to a list of trending movies?  
+		return "home";
+	}
+	/*
+	 * This is the old trending from before the JavaHeavy Implementation
+	 *
 	@RequestMapping(value = "/trending", method = RequestMethod.POST)
 	public String trendingPost(Model model, HttpServletRequest arequest){
 		
@@ -80,6 +153,7 @@ public class PostMovieController extends AbstractController{
 		//TODO - change to a list of trending movies?  
 		return "home";
 	}
+	*/
 	
 	//TODO - Probably should be moved to a new controller
 	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
@@ -102,19 +176,27 @@ public class PostMovieController extends AbstractController{
 	public String userSingle(@PathVariable String UserName, Model model, HttpServletRequest arequest){
 		//Allows you to view a user page and friend that user
 		
+		//Declare current user
 		User currentUser = getUserFromSession(arequest.getSession());
 		User userOnPage = UserDao.findByUserName((String) UserName);
 		
-		//find list of movies
-		//List<MovieLike> movieList = MovieLikeDao.findByUserUid(user.getUid());
+		//find list of movies Users getLikes() function
 		List<MovieLike> movieList = userOnPage.getLikes();
+		//fill out tmdb list # Don't Really need this
+		/*
+		MovieService[] movieObjects = new MovieService[movieList.size()];
+		for(int i = 0; i < movieList.size(); i++){
+			
+			movieObjects[i] = new MovieService(movieList.get(i).getTmdbid());
+		}*/
 		//TODO - SORT
 		
 		//list of friends
 		List<UserFriendsList> friendNums = UserFriendsListDao.findByUserOne(userOnPage.getUid());
 		List<User> friends = new ArrayList<User>();
 		List<User> mutualFriends = new ArrayList<User>();
-		//create a list of friends using "userfriendlist" uid
+		//create a list of friends using "userfriendlist" DAO uid
+		//also a list of mutual friends
 		for(UserFriendsList i : friendNums){
 			int uidsOfUserOnPageFriends = i.getUserTwo();
 			User AFriendOfUserOnPage = UserDao.findByuid(uidsOfUserOnPageFriends);
@@ -122,25 +204,8 @@ public class PostMovieController extends AbstractController{
 			//mutual friends through helper class
 			if(MyHelper.AreMutualFriends(AFriendOfUserOnPage, currentUser, UserFriendsListDao)){
 				mutualFriends.add(AFriendOfUserOnPage);
-			}
-			
-			//mutual friends?
-			/*
-			//in a for loop with i being the current iteration
-			List<UserFriendsList> a = UserFriendsListDao.findByUserOne(uidsOfUserOnPageFriends);//This is all wrong
-			if(UserFriendsListDao.findByUserOne(uidsOfUserOnPageFriends) != null)
-				if()
-				mutualFriends.add(AFriendOfUserOnPage);
-			
-			*/
-			
-			//class based mutual friend function
-			/*
-			System.out.println("waldo1");
-			if(currentUser.isMutual(user))
-				mutualFriends.add(it);
-			*/
-		}
+			}//end if
+		}//end for loop
 		
 		
 		
@@ -150,10 +215,10 @@ public class PostMovieController extends AbstractController{
 			//TODO - if logged in user friends list contains "user" from above set notFriendsAlready to false;
 		}
 		
-
+		//model.addAttribute("movieObjects", movieObjects);//actual movieservice objects in an array
 		model.addAttribute("userTemplateTitle", userOnPage.getUserName());
 		model.addAttribute("user", userOnPage);
-		model.addAttribute("movieList", movieList);
+		model.addAttribute("movieList", movieList);//list of movieLikes
 		model.addAttribute("friends", friends);
 		model.addAttribute("mutualFriends", mutualFriends);
 		model.addAttribute("notFriendsAlready", notFriendsAlready);
@@ -195,25 +260,17 @@ public class PostMovieController extends AbstractController{
 		
 	}
 	
-	@RequestMapping("/movie/{MovieName}")
-	public String moviePage(Model model, @PathVariable String MovieName){
+	@RequestMapping("/moviePage")
+	public String moviePage(Model model, HttpServletRequest arequest){
 		//This maps a page displaying the movie and all its fun attributes and pictures and stuff
-		//TODO fill out movie page and add hyperlinks to user page
-		
+		int movieId = Integer.parseInt(arequest.getParameter("movieId"));
 		//create movie object (need to pass in id)
-		//TODO IMPROVE MOVIE ID 
-		int movieId = 550;
 		MovieService movie = new MovieService(movieId);
 		ConfigData data = new ConfigData();
-		
 		String imageBaseUrl = data.getImageBaseURL(0);
 		//pass in movie object
-		
-		
-		model.addAttribute("movieTemplateTitle", MovieName);
 		model.addAttribute("movie", movie);
 		model.addAttribute("imageBaseUrl", imageBaseUrl);
-		
 		
 		return "movieDisplay";
 	}

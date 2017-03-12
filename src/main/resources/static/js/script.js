@@ -47,7 +47,7 @@ function fillDataByTitle(finput) {
         				function(data) {
         				    $(data.results).each(function(id, title){
 						    	console.log("hey" + this.title);
-						    	console.log(this.id);		
+						    	console.log("this is the id from javascript: " + this.id);		
         					
         				}); //close function
 	                    });//close getjson close fillDataByTitle
