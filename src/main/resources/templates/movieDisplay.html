@@ -16,8 +16,12 @@
 		<button formaction="../movieLikeSelected" name="movieId" th:value="${movie.id}">submit</button>
 	</form>
 	
-	
-	
+	<h1>Fellow Fans!</h1>
+	<div th:each = "user : ${usersWhoLike}">
+		<a th:href="@{../user/{usrnm}(usrnm=${user.userName})}" th:text="${user.userName}"></a>
+	</div>
+	<br/>
+	<br/>
 	<form>
 	
 	<!-- TODO- This should list friends who like this movie with the option to friend them-->

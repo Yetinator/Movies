@@ -268,9 +268,19 @@ public class PostMovieController extends AbstractController{
 		MovieService movie = new MovieService(movieId);
 		ConfigData data = new ConfigData();
 		String imageBaseUrl = data.getImageBaseURL(0);
+		//create a list of users who like and pass it in
+		int TMDBid = movie.getId();
+		List<MovieLike> lotsALikes= MovieLikeDao.findByTmdbid(TMDBid);
+		List<User> usersWhoLike = new ArrayList<User>();
+		for(MovieLike like : lotsALikes){
+			usersWhoLike.add(like.getUser());
+		}
+		
+		
 		//pass in movie object
 		model.addAttribute("movie", movie);
 		model.addAttribute("imageBaseUrl", imageBaseUrl);
+		model.addAttribute("usersWhoLike", usersWhoLike);
 		
 		return "movieDisplay";
 	}
