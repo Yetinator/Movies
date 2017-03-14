@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import rando.yetinator.movies.model.InviteEntry;
 import rando.yetinator.movies.model.MovieLike;
 import rando.yetinator.movies.model.MovieService;
 import rando.yetinator.movies.model.User;
@@ -104,20 +105,11 @@ public class AuthenticationController extends AbstractController{
 	
 	@RequestMapping("/testing")
 	public String testing(HttpServletRequest request){
+		System.out.println("Testing Somthing");
+		// Start test code
+		InviteEntry testItem = new InviteEntry(1,3,333484, "This is an invite to a cowboy action flick!");
 		
-		//String Jsonstuff = MovieService.testSomething();
 		
-		MovieService Phil = new MovieService("Jack+Reacher");
-		
-		System.out.println("The title is " + Phil.getTitle());
-		System.out.println("The description is " + Phil.getOverview());
-		System.out.println("the film id is: " + Phil.getId());
-		
-		//String Jsonstuff = Phil.testSomething();
-		
-		//System.out.println(Jsonstuff);
-		
-		//Phil.parseSomething(Jsonstuff);
 		
 		return "testing";
 	}
