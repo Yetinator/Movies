@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import rando.yetinator.movies.model.User;
+import rando.yetinator.movies.model.dao.InviteEntryDao;
 import rando.yetinator.movies.model.dao.MovieDictionaryDao;
 import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
@@ -25,6 +26,9 @@ public abstract class AbstractController {
 	
 	@Autowired 
 	protected UserFriendsListDao UserFriendsListDao;
+	
+	@Autowired
+	protected InviteEntryDao inviteEntryDao;
 
     public static final String userSessionKey = "user_id";
 

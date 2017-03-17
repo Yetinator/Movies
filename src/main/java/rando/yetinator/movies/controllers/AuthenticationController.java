@@ -1,5 +1,6 @@
 package rando.yetinator.movies.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import rando.yetinator.movies.model.InviteEntry;
 import rando.yetinator.movies.model.MovieLike;
 import rando.yetinator.movies.model.MovieService;
 import rando.yetinator.movies.model.User;
+import rando.yetinator.movies.model.dao.InviteEntryDao;
 import rando.yetinator.movies.model.dao.MovieDictionaryDao;
 import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
@@ -107,7 +109,19 @@ public class AuthenticationController extends AbstractController{
 	public String testing(HttpServletRequest request){
 		System.out.println("Testing Somthing");
 		// Start test code
-		InviteEntry testItem = new InviteEntry(1,3,333484, "This is an invite to a cowboy action flick!");
+		
+		List <User> guests = new ArrayList<User>();
+		guests.add(UserDao.findByuid(2));
+		guests.add(UserDao.findByuid(3));
+		User host = UserDao.findByuid(1);
+		System.out.println("The host will be " + host.getUserName());
+		for(User guest : guests){
+			System.out.println("the guest will be " + guest.getUserName());
+		}
+		
+		
+		InviteEntry testItem = new InviteEntry(host,guests,333484, "This is an invite to a cowboy action flick!");
+		inviteEntryDao.save(testItem);
 		
 		
 		

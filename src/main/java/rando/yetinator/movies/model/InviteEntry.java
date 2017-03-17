@@ -1,32 +1,45 @@
 package rando.yetinator.movies.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity  //import form java persistence
 @Table(name = "inviteEntry")
-@SecondaryTable(name="inviteItem")
+//@SecondaryTable(name="inviteList")
 public class InviteEntry extends AbstractEntity{
 	//this will link to an invite (event table with invite message and calendar date ect
-	public int invitorId;
-	public int inviteeId;
-	public int tmdbid;
+	private User invitorId;
+	private List<User> inviteList = new ArrayList<User>();
+	private int tmdbid;
 	
 	//Secondary Table
-	public String message;//Double check for length restrictions
+	private String message;//Double check for length restrictions
+	private int tableId;
 	//Calendar day and time
 	
 	//there will be other users of the same invite uid
 	
 	public InviteEntry() {}
 	
-	public InviteEntry(int invitorId, int inviteeId, int tmdbid, String message){
+	public InviteEntry(User invitorId, List<User> inviteList, int tmdbid, String message){
 		super();
 		this.invitorId = invitorId;
-		this.inviteeId = inviteeId;
+		this.inviteList = inviteList;
 		this.tmdbid = tmdbid;
 		this.message = message;
 		
@@ -36,18 +49,27 @@ public class InviteEntry extends AbstractEntity{
 	 * @return the invitorId
 	 */
 	@NotNull
-	@Column(name="InvitorId")
-	public int getInvitorId() {
+	//@Column(name="InvitorId")
+	@OneToOne
+	@JoinColumn(name="invitor_uid")
+	public User getInvitorId() {
 		return invitorId;
 	}
-
-	/**
-	 * @return the inviteeId
-	 */
+/*
+	@Id
+	@GeneratedValue
 	@NotNull
-	@Column(name="InviteeId")
-	public int getInviteeId() {
-		return inviteeId;
+	@Column(name = "tableId", unique = true, table = "inviteList")
+	public int getTableId() {
+		return this.tableId;
+	}
+	*/
+	//@NotNull
+	
+	@ElementCollection
+	@CollectionTable(name = "inviteList", joinColumns={@JoinColumn(name = "whateverThisIs")})//is this a table uid?  should it autoGenerate in some way? 
+	public List<User> getinviteList() {
+		return inviteList;
 	}
 
 	/**
@@ -61,7 +83,7 @@ public class InviteEntry extends AbstractEntity{
 	
 	//@return message
 	@NotNull
-	@Column(name="message", table="inviteItem")
+	@Column(name="message")//, table="inviteItem")
 	public String getMessage(){
 		return message;
 	}
@@ -69,16 +91,17 @@ public class InviteEntry extends AbstractEntity{
 	/**
 	 * @param invitorId the invitorId to set
 	 */
-	public void setInvitorId(int invitorId) {
+	public void setInvitorId(User invitorId) {
 		this.invitorId = invitorId;
 	}
 
 	/**
-	 * @param inviteeId the inviteeId to set
+	
 	 */
-	public void setInviteeId(int inviteeId) {
-		this.inviteeId = inviteeId;
+	public void setinviteList(List<User> inviteList) {
+		this.inviteList = inviteList;
 	}
+	
 
 	/**
 	 * @param tmdbid the tmdbid to set
@@ -91,6 +114,9 @@ public class InviteEntry extends AbstractEntity{
 		this.message = message;
 	}
 	
+	public void setTableId(int tableId){
+		this.tableId = tableId;
+	}
 	
 
 }
