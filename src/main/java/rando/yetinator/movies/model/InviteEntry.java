@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
@@ -49,7 +50,7 @@ public class InviteEntry extends AbstractEntity{
 	 * @return the invitorId
 	 */
 	@NotNull
-	//@Column(name="InvitorId")
+	//@Column(name="InvitorId", table = "inviteList")
 	@OneToOne
 	@JoinColumn(name="invitor_uid")
 	public User getInvitorId() {
