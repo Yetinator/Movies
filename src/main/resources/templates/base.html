@@ -16,12 +16,12 @@
 			<a href="/trending">Select movies</a><br/>
 			<a href="/userlist">user list</a><br/>
 			<a href="/signout">Sign out</a><br/>
-			<a href="/testing">Testing</a><br/>
+			<a href="/testing">Testing</a><br/><br/><br/>
 			<a href="/populateDatabase">populate Database</a>
 			
 		</div>
-		<div th:text="${#httpSession.getAttribute('userSessionKey')}">
 		
+		<div th:text="${#httpSession.getAttribute('userSessionKey')}">
 		</div>
 		
 		<div id="smallMovieDisplay" th:fragment="smallMovieDisplay">
@@ -33,12 +33,21 @@
 			</img>
 			<p th:text="${movie.overview}" style="width: 300px;" >Movie description here
 			</p>
-			<script type="text/javascript" >"${movieTemplateTitle}"</script>
-		
-		
-		
+			<script type="text/javascript">"${movieTemplateTitle}"</script>
 		</div>
 		
+		<div id="movieInviteForm" th:fragment="movieInviteForm">
+			<h1>Invite your friends!</h1>
+			<form action="/invite" method="post">
+				<label>Send a personalized message</label>
+				<input type="text" name="message" value="Please attend my movie viewing"></input>
+				<ul th:each = "user : ${usersWhoLike}">
+					<input type = "checkbox" name="invited" th:text="${user.userName}" th:value="${user.uid}"></input>
+				</ul>
+				<input type="hidden" name = "movieid" th:value="${movie.id}"></input>
+				<button type="submit">Invite</button>
+			</form>
+		</div>
 		
 	</body>
 </html>

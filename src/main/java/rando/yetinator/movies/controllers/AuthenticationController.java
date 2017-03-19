@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import rando.yetinator.movies.MyHelper;
 import rando.yetinator.movies.model.InviteEntry;
+import rando.yetinator.movies.model.InvitedGuest;
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
 import rando.yetinator.movies.model.MovieService;
@@ -109,23 +111,17 @@ public class AuthenticationController extends AbstractController{
 	
 	@RequestMapping("/testing")
 	public String testing(HttpServletRequest request, Model model){
-		System.out.println("Testing Somthing");
+		System.out.println("Testing Something");
 		// Start test code
-		
-		List <User> guests = new ArrayList<User>();
-		guests.add(UserDao.findByuid(2));
-		guests.add(UserDao.findByuid(1));
-		User host = UserDao.findByuid(2);
-		System.out.println("The host will be " + host.getUserName());
-		for(User guest : guests){
-			System.out.println("the guest will be " + guest.getUserName());
+		InviteEntry anEntry = inviteEntryDao.findByUid(3);
+		System.out.println(anEntry.getTmdbid());
+		System.out.println(anEntry.getMessage());
+		List<InvitedGuest> invitedpeeps = anEntry.getinviteList();
+		for(InvitedGuest entry : invitedpeeps){
+			User aUser = entry.getUserIdentifier();
+			System.out.println(aUser.getUserName() + " " + aUser.getzipcode());
 		}
-		
-		
-		InviteEntry testItem = new InviteEntry(host,guests,333485, "Hey Hey Mama it's the way you dance. It's the way you grooooove, yeah!");
-		inviteEntryDao.save(testItem);
-		
-		
+		//System.out.println(x);
 		
 		return "testing";
 	}
@@ -185,7 +181,8 @@ public class AuthenticationController extends AbstractController{
 		}
 		System.out.println("Redirecting Now");
 		model.addAttribute("random", "You have populated your database.");
-		return "redirect:/home";
+		
+		return "home";
 	}
 	
 	

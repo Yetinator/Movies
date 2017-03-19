@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import rando.yetinator.movies.model.InviteEntry;
+import rando.yetinator.movies.model.InvitedGuest;
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.UserFriendsList;
+import rando.yetinator.movies.model.dao.InviteEntryDao;
+import rando.yetinator.movies.model.dao.InvitedGuestDao;
 import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
 import rando.yetinator.movies.model.dao.UserFriendsListDao;
@@ -20,7 +24,13 @@ public class MyHelper {
 	
 	@Autowired
 	protected MovieLikeDao MovieLikeDao;
+	/*
+	@Autowired
+	protected InviteEntryDao inviteEntryDao;
 	
+	@Autowired
+	protected InvitedGuestDao invitedGuestDao;
+	*/
 	public static boolean AreMutualFriends(User userOne, User userTwo, UserFriendsListDao UserFriendsListDao){
 		//UserOne is a number userTwo is a number
 	//if UserOne exists as userTwo in a list where userTwo is primary then true else false
@@ -57,6 +67,32 @@ public class MyHelper {
 		}
 		return false;
 		
+	}
+	
+	public static void inviteToMovie(User host, List<User> guests, int TMDBid, String message, InviteEntryDao inviteEntryDao, InvitedGuestDao invitedGuestDao){
+		//This takes input and organizes an invite using Movie-system classes and DAO
+		//MyHelper ahelper = new MyHelper();
+		
+		InviteEntry testItem;
+		try{
+			int hostid = host.getUid();
+			System.out.println("the host uid is " + hostid);
+			testItem = new InviteEntry(hostid,TMDBid, message);
+			System.out.println("the test item is: " + testItem.getMessage());
+			inviteEntryDao.save(testItem);
+		}catch(Error e){
+			System.out.println("Problem creating and saving InviteEntry Object.");
+			testItem = null;
+		}
+		
+		if(testItem != null){
+		//populate invites
+		for(User guest : guests){
+			InvitedGuest guestEntry = new InvitedGuest(guest, testItem);
+			testItem.addInvite(guestEntry);
+			invitedGuestDao.save(guestEntry);
+		}
+		}
 	}
 	
 
