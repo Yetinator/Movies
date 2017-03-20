@@ -35,8 +35,11 @@ public class ContentController extends AbstractController{
 	@RequestMapping(value = "/invite",  method = RequestMethod.POST)
 	public String inviteCreate(Model model, HttpServletRequest arequest){
 		//This creates and invite object
+		//First get proposed invites
 		String[] invitedGuestids = arequest.getParameterValues("invited");
+		//Second get logged user
 		User useridloggedin = getUserFromSession(arequest.getSession());
+		//Get the movie int
 		int TMDBid = Integer.parseInt(arequest.getParameter("movieid"));
 		String message = arequest.getParameter("message");
 		List<User> invitedGuests = new ArrayList();
@@ -45,9 +48,7 @@ public class ContentController extends AbstractController{
 			invitedGuests.add(UserDao.findByuid(Integer.parseInt(guestid)));
 			//turn these back into users?  
 		}
-		System.out.println("TMDBid is : " + TMDBid);
-		System.out.println("message is: " + message);
-		System.out.println("useridloggedin is: " + useridloggedin);
+	
 		MyHelper.inviteToMovie(useridloggedin, invitedGuests, TMDBid, message, inviteEntryDao, invitedGuestDao);
 		model.addAttribute("random", "Your invite has been created");
 		return "generic";

@@ -46,7 +46,6 @@ public class PostMovieController extends AbstractController{
 		//the correct TMDBid
 		String title = arequest.getParameter("movieTitle");
 		//I need to create an array of MovieService objects to pass into my movieConfirm page for selection
-		//MovieService[] movies = MovieService.allMoviesOfName(title);
 		
 		int[] movieNumbers = MovieService.allMoviesOfName(title);
 		MovieService[] movies = new MovieService[movieNumbers.length]; 
@@ -72,6 +71,7 @@ public class PostMovieController extends AbstractController{
 	
 	@RequestMapping(value = "/movieLikeSelected", method = RequestMethod.POST)
 	public String trendingPost(Model model, HttpServletRequest arequest){
+		//This saves the movie like to the database
 		
 		//String title = arequest.getParameter("movieTitle");
 		Integer TMDBid = null;
@@ -92,14 +92,12 @@ public class PostMovieController extends AbstractController{
 		if(MovieDictionary.validMovie(title, TMDBid)){
 			//save a movieLike after post request
 			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
-			System.out.println(title);
 			User user = UserDao.findByuid(useridloggedin);
-			//Removed from below useridloggedin, 
+
 			MovieLike like = new MovieLike(title, user, TMDBid);
 			//user.setLike(like);//TODO - GET RID OF THIS
 			user.addLike(like);
 			MovieLikeDao.save(like);
-			System.out.println(like.getUser().getUserName());
 			model.addAttribute("random", "Post trending");
 		}else{
 			model.addAttribute("random", "Bad Post");
@@ -110,62 +108,15 @@ public class PostMovieController extends AbstractController{
 		//TODO - change to a list of trending movies?  
 		return "generic";
 	}
-	/*
-	 * This is the old trending from before the JavaHeavy Implementation
-	 *
-	@RequestMapping(value = "/trending", method = RequestMethod.POST)
-	public String trendingPost(Model model, HttpServletRequest arequest){
-		
-		//String title = arequest.getParameter("movieTitle");
-		Integer TMDBid = null;
-		try{
-			String numString = arequest.getParameter("movieId");
-			System.out.println(numString);
-			TMDBid = Integer.parseInt(numString);
-			System.out.println(TMDBid);
-			
-			//TMDBid = Integer.getInteger(arequest.getParameter("movieId"));
-		}catch(Exception e){
-			System.out.println("There is a problem with the TMDBid get parameter");
-		}
-		//Create a movie object
-		MovieService movie = new MovieService(TMDBid);
-		String title = movie.getTitle();
-		
-		if(MovieDictionary.validMovie(title, TMDBid)){
-			//save a movieLike after post request
-			Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
-			System.out.println(title);
-			User user = UserDao.findByuid(useridloggedin);
-			//Removed from below useridloggedin, 
-			MovieLike like = new MovieLike(title, user, TMDBid);
-			//user.setLike(like);//TODO - GET RID OF THIS
-			user.addLike(like);
-			MovieLikeDao.save(like);
-			System.out.println(like.getUser().getUserName());
-			model.addAttribute("random", "Post trending");
-		}else{
-			model.addAttribute("random", "Bad Post");
-		}
-		
-		
-		
-		//TODO - change to a list of trending movies?  
-		return "generic";
-	}
-	*/
+
 	
 	//TODO - Probably should be moved to a new controller
 	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
 	public String userList(Model model, HttpServletRequest arequest){
+		//Creates a list of users to display on the screen
 		
 		List<User> users = UserDao.findAll();
-		//List<String> names;
-		/*
-		 for(User user : users){
-			names.add(user.getUserName());
-		}
-		*/
+
 		model.addAttribute("userTemplateTitle", "All Users");
 		model.addAttribute("usersList", users);
 		
@@ -183,12 +134,7 @@ public class PostMovieController extends AbstractController{
 		//find list of movies Users getLikes() function
 		List<MovieLike> movieList = userOnPage.getLikes();
 		//fill out tmdb list # Don't Really need this
-		/*
-		MovieService[] movieObjects = new MovieService[movieList.size()];
-		for(int i = 0; i < movieList.size(); i++){
-			
-			movieObjects[i] = new MovieService(movieList.get(i).getTmdbid());
-		}*/
+
 		//TODO - SORT
 		
 		//list of friends
@@ -247,13 +193,6 @@ public class PostMovieController extends AbstractController{
 		//Create a line for friends list table
 		UserFriendsList friendEntry = new UserFriendsList(currentUser.getUid(),  frienduserid);
 		UserFriendsListDao.save(friendEntry);
-		
-		
-		//User friendUser = UserDao.findByuid(1);
-		//currentUser.addFriend(friendUser);//this is for user class based friend addition instead of 'userfriendlist' class
-		
-	
-		//return "redirect:/user/" + UserName;
 		
 		model.addAttribute("random", "You have friended " + UserName + ".");
 		return "generic";
