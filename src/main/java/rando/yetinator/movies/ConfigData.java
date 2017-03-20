@@ -28,4 +28,8 @@ public class ConfigData {
 			return image_base_url + backdrop_sizes.get(1);
 	}
 	
+	public String getApiKey(){
+		return api_key;
+	}
+	
 }

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -45,6 +46,7 @@ public class InviteEntry extends AbstractEntity{
 	private int invitorId;
 	//private List<User> inviteList = new ArrayList<User>();
 	private List<InvitedGuest> inviteList = new ArrayList<InvitedGuest>();
+	//private List<User> inviteList = new ArrayList<User>();
 	private int tmdbid;
 	private String message;//Double check for length restrictions
 	
@@ -55,7 +57,7 @@ public class InviteEntry extends AbstractEntity{
 	//there will be other users of the same invite uid
 	
 	public InviteEntry() {}
-	
+	//TODO invitor id need to change to invitor if this works
 	public InviteEntry(int invitorId, int tmdbid, String message){
 		super();
 		
@@ -79,7 +81,7 @@ public class InviteEntry extends AbstractEntity{
 	 * Somehow JoinColumn and a one to one annotation help this work.  I'm not sure why this is important
 	 */
 	//@OneToOne
-	//@JoinColumn(name="invitor_uid")
+	//@JoinColumn(name="invitor_uid", table="invited_guest_list")
 	@NotNull
 	@Column(name="InvitorUid")
 	public int getInvitorId() {//ChangedInvitor
@@ -104,7 +106,7 @@ public class InviteEntry extends AbstractEntity{
 	//@OrderColumn(name="messedUp")
 	//@ElementCollection
 	//@CollectionTable(name = "inviteList", joinColumns={@JoinColumn(name = "inviteEntryUidIThink")})//is this a table uid?  should it autoGenerate in some way? 
-	
+	//@Column(name = "why")
 	//@GenericGenerator(name="hilo-gen", strategy="hilo")//https://www.youtube.com/watch?v=kk207HAym_I#t=713.759166
 	//@CollectionId(columns = { @Column(name="inviteId") }, generator = "hilo-gen", type = @Type(type = "long"))
 	@JoinColumn(name="wheehoo")

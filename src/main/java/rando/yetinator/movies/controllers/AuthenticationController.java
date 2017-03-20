@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,46 @@ public class AuthenticationController extends AbstractController{
 		
 		model.addAttribute("random", "Welcome to my fancy Movies page. ");
 		model.addAttribute("random2", "This is a sight where you can friend people with similar movie tastes and if you have a movie like in common a fellow movie goer will be recomended.");
+		return "generic";
+	}
+	
+	@RequestMapping("/home")
+	public String userHome(Model model, HttpServletRequest arequest){
+		
+		Integer useridloggedin = getUserFromSession(arequest.getSession()).getUid();
+		User loggedIn = UserDao.findByuid(useridloggedin);
+		List<InvitedGuest> pendingInvites = invitedGuestDao.findByGuest(useridloggedin);
+		//Create a list of invites
+		//TODO - make this better
+		List<InviteEntry> listOfInvites = new ArrayList<>(); 
+		List<User> invitedUsers = new ArrayList<>();
+		for(InvitedGuest invite : pendingInvites){
+			//an invite is an invitedGuest entry we need the InviteDetailsUid to access the rest of the invite
+			//int inviteUid = invite.getInviteDetails();
+			listOfInvites.add(invite.getInviteDetails());
+			//invite.getInviteDetails().getinviteList();
+			//invitedUsers.add();
+			System.out.println("invite Details are: " + invite.getInviteDetails().getTmdbid() + " " + invite.getInviteDetails().getMessage());
+		}
+		
+		//InviteEntry f = inviteEntryDao.find
+		//Temp
+		InviteEntry oneInvite = listOfInvites.get(4);
+		MovieService theMovie = new MovieService(oneInvite.getTmdbid());
+		List<InvitedGuest> guestList = oneInvite.getinviteList();
+		
+		for(InvitedGuest guest : guestList){
+			invitedUsers.add(guest.getGuest());
+		}
+		
+		model.addAttribute("movie", theMovie);
+		model.addAttribute("host", loggedIn);
+		//model.addAttribute("guestList", oneEntry.getinviteList());
+		model.addAttribute("guestList", invitedUsers);
+		model.addAttribute("random", "Welcome to my fancy Movies page. ");
+		model.addAttribute("random2", "This is a sight where you can friend people with similar movie tastes and if you have a movie like in common a fellow movie goer will be recomended.");
+		
+		
 		return "home";
 	}
 	
@@ -100,7 +141,7 @@ public class AuthenticationController extends AbstractController{
 			//error logging on!
 		}
 		
-		return "home";
+		return "generic";
 	}
 	
 	@RequestMapping(value = "/signout", method = RequestMethod.GET)
@@ -117,10 +158,12 @@ public class AuthenticationController extends AbstractController{
 		System.out.println(anEntry.getTmdbid());
 		System.out.println(anEntry.getMessage());
 		List<InvitedGuest> invitedpeeps = anEntry.getinviteList();
+		/*
 		for(InvitedGuest entry : invitedpeeps){
-			User aUser = entry.getUserIdentifier();
+			User aUser = entry.getGuest();
 			System.out.println(aUser.getUserName() + " " + aUser.getzipcode());
 		}
+		*/
 		//System.out.println(x);
 		
 		return "testing";
@@ -134,7 +177,7 @@ public class AuthenticationController extends AbstractController{
 		String password = "thisthis";
 		String zipString = "63021";
 		Integer zip = Integer.valueOf(zipString);
-		int[][] movieIds = {{197,333484,941,944,942,943,115},{10144,321612,10020,812},{4232,609,333484,11470},{333484},{333484}};
+		int[][] movieIds = {{197,333484,941,944,942,943,115},{10144,321612,10020,812,11006},{4232,609,333484,11470},{333484,11452,11006},{333484,11006,10147}};
 		
 		for(String name : names){
 			User newUser = new User(name, password, zip);
@@ -182,60 +225,9 @@ public class AuthenticationController extends AbstractController{
 		System.out.println("Redirecting Now");
 		model.addAttribute("random", "You have populated your database.");
 		
-		return "home";
+		return "generic";
 	}
 	
 	
-	//TODO - make a JSON controlled link to Movies API Database
-	/*
-	@RequestMapping(value = "/API")//, method = RequestMethod.GET) Changed this up
-	public String APITest(HttpServletRequest request, Model model){
-		String apiKey = "e34f926e66fa7ffcaaea86c905cf10de";
-		String apiLink = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=Jack+Reacher";
-		//System.out.println("API Link is " + apiLink);
-		//Borrowed form /trending
-		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
-		List<MovieLike> movies = MovieLikeDao.findAll(a);
-		
-		model.addAttribute("movies", movies);
-		
-		//return "redirect:" + apiLink; 
-		return "testing";
-	}
-	@RequestMapping(value = "/API2", method = RequestMethod.POST)
-	public void API2(@RequestBody Map<String, Object> payload) 
-		    throws Exception {
-
-		  System.out.println(payload);
-
-		} */
-	/*
-	@RequestMapping(value = "/APIJava")//, method = RequestMethod.GET) Changed this up
-	public String APITestAgain(HttpServletRequest request, Model model){
-		String apiKey = "e34f926e66fa7ffcaaea86c905cf10de";
-		String apiLink = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=Jack+Reacher";
-		//System.out.println("API Link is " + apiLink);
-		//Borrowed form /trending
-		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
-		
-		var req = new XMLHttpRequest();
-		req.open("GET", "http://api.themoviedb.org/2.1/Movie.search/en/json/XXX/immortals?callback=foobar", true);
-		req.send();
-		req.onreadystatechange=function() {
-		   if (req.readyState==4 && req.status==200) {
-		      console.log(req.responseText); 
-		   }
-		}
-		
-		//return "redirect:" + apiLink; 
-		return "testing";
-	}
-	*/
-	/*
-	@RequestMapping("/testing2")
-	public @ResponseBody List<MovieService> performLooseSearch(@RequestParam("CHARS") String chars)
-	{
-		 
-		return exampleObjects;
-	}*/
+	
 }

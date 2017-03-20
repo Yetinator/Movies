@@ -19,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import rando.yetinator.movies.ConfigData;
 
 public class MovieService {
 	
@@ -47,7 +48,9 @@ public class MovieService {
 	//boolean video
 	//vote average
 	//vote count
-	String APIKey = "e34f926e66fa7ffcaaea86c905cf10de";
+	ConfigData data = new ConfigData();//creates a data object to reference the api_key
+	String APIKey = data.getApiKey();
+	
 	
 	
 	
@@ -358,10 +361,10 @@ public class MovieService {
 					.add("type", "json")
 					.build();
 			
-			
+			ConfigData data = new ConfigData();
 			
 			okhttp3.Request request = new okhttp3.Request.Builder()
-					.url("https://api.themoviedb.org/3/movie/550?api_key=e34f926e66fa7ffcaaea86c905cf10de")
+					.url("https://api.themoviedb.org/3/movie/550?api_key=" + data.getApiKey())
 					.get()
 					.build();
 			
@@ -423,8 +426,9 @@ public class MovieService {
 	protected static String accessDbByName(String movieName){
 		//from youtube https://www.youtube.com/watch?v=lkbclq2nyfk
 		
+		ConfigData data = new ConfigData();
 		String url = "https://api.themoviedb.org/3/search/movie?api_key=";
-		String APIKey = "e34f926e66fa7ffcaaea86c905cf10de";
+		String APIKey = data.getApiKey();
 		String queryUrl = "&query=";
 		String urlFinished = url + APIKey + queryUrl + movieName;
 		
@@ -464,7 +468,7 @@ public class MovieService {
 		//from youtube https://www.youtube.com/watch?v=lkbclq2nyfk
 		
 		String url = "https://api.themoviedb.org/3/movie/";
-		String APIKey = "e34f926e66fa7ffcaaea86c905cf10de";
+		String APIKey = data.getApiKey();
 		String midurl = "?api_key=";
 		String urlFinished = url +  movieId + midurl + APIKey;
 		

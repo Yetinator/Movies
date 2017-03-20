@@ -67,7 +67,7 @@ public class PostMovieController extends AbstractController{
 		
 		//return "redirect:/movieLikeSelected";Nope, I need a page in between
 		return "movieConfirm";
-		//return "home";
+		//return "generic";
 	}
 	
 	@RequestMapping(value = "/movieLikeSelected", method = RequestMethod.POST)
@@ -108,7 +108,7 @@ public class PostMovieController extends AbstractController{
 		
 		
 		//TODO - change to a list of trending movies?  
-		return "home";
+		return "generic";
 	}
 	/*
 	 * This is the old trending from before the JavaHeavy Implementation
@@ -151,7 +151,7 @@ public class PostMovieController extends AbstractController{
 		
 		
 		//TODO - change to a list of trending movies?  
-		return "home";
+		return "generic";
 	}
 	*/
 	
@@ -239,7 +239,7 @@ public class PostMovieController extends AbstractController{
 		for(UserFriendsList aFriend : currentUserFriends){
 			if(aFriend.getUserTwo() == frienduserid ){
 				model.addAttribute("random", "You are already friends with " + UserName + ".");
-				return "home";
+				return "generic";
 			}
 				
 		}
@@ -256,7 +256,7 @@ public class PostMovieController extends AbstractController{
 		//return "redirect:/user/" + UserName;
 		
 		model.addAttribute("random", "You have friended " + UserName + ".");
-		return "home";
+		return "generic";
 		
 	}
 	

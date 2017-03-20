@@ -28,7 +28,7 @@ public class ContentController extends AbstractController{
 		
 		
 		
-		return "home";
+		return "generic";
 		
 	}
 	
@@ -50,7 +50,7 @@ public class ContentController extends AbstractController{
 		System.out.println("useridloggedin is: " + useridloggedin);
 		MyHelper.inviteToMovie(useridloggedin, invitedGuests, TMDBid, message, inviteEntryDao, invitedGuestDao);
 		model.addAttribute("random", "Your invite has been created");
-		return "home";
+		return "generic";
 		
 	}
 

@@ -78,6 +78,7 @@ public class MyHelper {
 			int hostid = host.getUid();
 			System.out.println("the host uid is " + hostid);
 			testItem = new InviteEntry(hostid,TMDBid, message);
+			//testItem = new InviteEntry(host,TMDBid, message);
 			System.out.println("the test item is: " + testItem.getMessage());
 			inviteEntryDao.save(testItem);
 		}catch(Error e){
@@ -89,6 +90,7 @@ public class MyHelper {
 		//populate invites
 		for(User guest : guests){
 			InvitedGuest guestEntry = new InvitedGuest(guest, testItem);
+			//testItem.addInvite(guestEntry);
 			testItem.addInvite(guestEntry);
 			invitedGuestDao.save(guestEntry);
 		}

@@ -40,13 +40,26 @@
 			<h1>Invite your friends!</h1>
 			<form action="/invite" method="post">
 				<label>Send a personalized message</label>
-				<input type="text" name="message" value="Please attend my movie viewing"></input>
+				<input type="text" name="message" value="Please attend my movie viewing" size="100"></input>
 				<ul th:each = "user : ${usersWhoLike}">
 					<input type = "checkbox" name="invited" th:text="${user.userName}" th:value="${user.uid}"></input>
 				</ul>
 				<input type="hidden" name = "movieid" th:value="${movie.id}"></input>
 				<button type="submit">Invite</button>
 			</form>
+		</div>
+		
+		<div id="inviteDisplay" th:fragment="inviteDisplay">
+			<h1>You have been invited to a movie!</h1>
+			<h2 th:text="'Would you like to watch ' + ${movie.title} + '?'"></h2>
+			<h2 th:text="'You were invited by ' + ${host.userName}"></h2>
+			<h2>This is the invite list.</h2>
+			<p th:each="invited : ${guestList}">
+				<ul>
+					<li th:text="${invited.userName}"></li>
+				</ul>
+			</p>
+		
 		</div>
 		
 	</body>
