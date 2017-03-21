@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import rando.yetinator.movies.MyHelper;
 import rando.yetinator.movies.model.MovieLike;
+import rando.yetinator.movies.model.MovieService;
 import rando.yetinator.movies.model.User;
 
 @Controller
@@ -41,6 +42,7 @@ public class ContentController extends AbstractController{
 		User useridloggedin = getUserFromSession(arequest.getSession());
 		//Get the movie int
 		int TMDBid = Integer.parseInt(arequest.getParameter("movieid"));
+		//MovieService TMDB = new MovieService(TMDBid);
 		String message = arequest.getParameter("message");
 		List<User> invitedGuests = new ArrayList();
 		for(String guestid : invitedGuestids){

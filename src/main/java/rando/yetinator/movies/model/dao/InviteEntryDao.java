@@ -14,7 +14,7 @@ import rando.yetinator.movies.model.User;
 @Repository
 public interface InviteEntryDao extends CrudRepository<InviteEntry, Integer> {
 	public List<InviteEntry> findAll();
-	public List<InviteEntry> findByInvitorId(int invitorId);
+	public List<InviteEntry> findByInvitor(int invitorId);
 	public InviteEntry findByUid(int uid);
 	public List<InviteEntry> findByInvited(User invited);
 	

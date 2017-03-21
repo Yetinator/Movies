@@ -13,6 +13,7 @@
 	
 	<div th:each = "invite : ${homeUserInvites}">
 		<p th:text = "${invite.message}"></p>
+		<p th:text = "'the hosts name is: ' + ${invite.invitor.userName}"></p>
 		<div th:each = "person : ${invite.invited}">
 			
 			<p th:text = "${person.userName}">

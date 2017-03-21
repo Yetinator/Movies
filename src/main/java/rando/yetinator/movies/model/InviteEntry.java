@@ -42,7 +42,7 @@ public class InviteEntry extends AbstractEntity{
 	
 
 	//private User invitorId;
-	private int invitorId;
+	private User invitor;
 	//private List<User> inviteList = new ArrayList<User>();
 	//private List<InvitedGuest> inviteList = new ArrayList<InvitedGuest>();
 	//private List<User> inviteList = new ArrayList<User>();
@@ -58,10 +58,10 @@ public class InviteEntry extends AbstractEntity{
 	
 	public InviteEntry() {}
 	//TODO invitor id need to change to invitor if this works
-	public InviteEntry(int invitorId, int tmdbid, String message){
+	public InviteEntry(User invitor, int tmdbid, String message){
 		super();
 		
-		this.invitorId = invitorId;
+		this.invitor = invitor;
 		//this.inviteList = inviteList;
 		this.tmdbid = tmdbid;
 		this.message = message;
@@ -84,9 +84,10 @@ public class InviteEntry extends AbstractEntity{
 	//@OneToOne
 	//@JoinColumn(name="invitor_uid", table="invited_guest_list")
 	@NotNull
-	@Column(name="InvitorUid")
-	public int getInvitorId() {//ChangedInvitor
-		return invitorId;
+	//@Column(name="InvitorUid")
+	@OneToOne
+	public User getInvitor() {//ChangedInvitor
+		return invitor;
 	}
 	
 	@ManyToMany
@@ -150,8 +151,8 @@ public class InviteEntry extends AbstractEntity{
 	/**
 	 * @param invitorId the invitorId to set
 	 */
-	public void setInvitorId(int invitorId) {//ChangedInvitor
-		this.invitorId = invitorId;
+	public void setInvitor(User invitor) {//ChangedInvitor
+		this.invitor = invitor;
 	}
 
 	/**

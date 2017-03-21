@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import rando.yetinator.movies.model.InviteEntry;
+import rando.yetinator.movies.model.MovieService;
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.UserFriendsList;
 import rando.yetinator.movies.model.dao.InviteEntryDao;
@@ -75,8 +76,8 @@ public class MyHelper {
 		try{
 			int hostid = host.getUid();
 			System.out.println("the host uid is " + hostid);
-			testItem = new InviteEntry(hostid,TMDBid, message);
 			//testItem = new InviteEntry(host,TMDBid, message);
+			testItem = new InviteEntry(host,TMDBid, message);
 			System.out.println("the test item is: " + testItem.getMessage());
 			inviteEntryDao.save(testItem);
 		}catch(Error e){

@@ -8,6 +8,8 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Id;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -165,10 +167,6 @@ public class MovieService {
 		return homepage;
 	}
 
-
-
-
-
 	/**
 	 * @param homepage the homepage to set
 	 */
@@ -176,20 +174,13 @@ public class MovieService {
 		this.homepage = homepage;
 	}
 
-
-
-
-
 	/**
 	 * @return the id
 	 */
+	@Id
 	public int getId() {
 		return id;
 	}
-
-
-
-
 
 	/**
 	 * @param id the id to set
@@ -198,20 +189,12 @@ public class MovieService {
 		this.id = id;
 	}
 
-
-
-
-
 	/**
 	 * @return the overview
 	 */
 	public String getOverview() {
 		return overview;
 	}
-
-
-
-
 
 	/**
 	 * @param overview the overview to set
@@ -220,20 +203,12 @@ public class MovieService {
 		this.overview = overview;
 	}
 
-
-
-
-
 	/**
 	 * @return the poster_path
 	 */
 	public String getPoster_path() {
 		return poster_path;
 	}
-
-
-
-
 
 	/**
 	 * @param poster_path the poster_path to set
@@ -242,20 +217,12 @@ public class MovieService {
 		this.poster_path = poster_path;
 	}
 
-
-
-
-
 	/**
 	 * @return the release_date
 	 */
 	public String getRelease_date() {
 		return release_date;
 	}
-
-
-
-
 
 	/**
 	 * @param release_date the release_date to set
@@ -264,20 +231,12 @@ public class MovieService {
 		this.release_date = release_date;
 	}
 
-
-
-
-
 	/**
 	 * @return the runtime
 	 */
 	public int getRuntime() {
 		return runtime;
 	}
-
-
-
-
 
 	/**
 	 * @param runtime the runtime to set
@@ -286,20 +245,12 @@ public class MovieService {
 		this.runtime = runtime;
 	}
 
-
-
-
-
 	/**
 	 * @return the status
 	 */
 	public String getStatus() {
 		return status;
 	}
-
-
-
-
 
 	/**
 	 * @param status the status to set
@@ -308,10 +259,6 @@ public class MovieService {
 		this.status = status;
 	}
 
-
-
-
-
 	/**
 	 * @return the title
 	 */
@@ -319,20 +266,12 @@ public class MovieService {
 		return title;
 	}
 
-
-
-
-
 	/**
 	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-
-
 
 	//Test function
 	public void parseSomething(String JsonString){
