@@ -30,7 +30,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import rando.yetinator.movies.model.dao.InvitedGuestDao;
+
 import rando.yetinator.movies.model.dao.UserDao;
 import rando.yetinator.movies.model.dao.UserFriendsListDao;
 
@@ -40,13 +40,13 @@ import rando.yetinator.movies.model.dao.UserFriendsListDao;
 public class InviteEntry extends AbstractEntity{
 	//this will link to an invite (event table with invite message and calendar date ect
 	
-	@Autowired
-	protected InvitedGuestDao invitedGuestDao;
+
 	//private User invitorId;
 	private int invitorId;
 	//private List<User> inviteList = new ArrayList<User>();
-	private List<InvitedGuest> inviteList = new ArrayList<InvitedGuest>();
+	//private List<InvitedGuest> inviteList = new ArrayList<InvitedGuest>();
 	//private List<User> inviteList = new ArrayList<User>();
+	private List<User> invited;
 	private int tmdbid;
 	private String message;//Double check for length restrictions
 	
@@ -75,6 +75,7 @@ public class InviteEntry extends AbstractEntity{
 		*/
 	}
 
+
 	/**
 	 * @return the invitorId
 	 * These annotations are having trouble being treated normally.  
@@ -88,6 +89,11 @@ public class InviteEntry extends AbstractEntity{
 		return invitorId;
 	}
 	
+	@ManyToMany
+	@JoinColumn(name = "user_uid")
+	public List<User> getInvited(){
+		return this.invited;
+	}
 
 
 	//@Id
@@ -109,22 +115,22 @@ public class InviteEntry extends AbstractEntity{
 	//@Column(name = "why")
 	//@GenericGenerator(name="hilo-gen", strategy="hilo")//https://www.youtube.com/watch?v=kk207HAym_I#t=713.759166
 	//@CollectionId(columns = { @Column(name="inviteId") }, generator = "hilo-gen", type = @Type(type = "long"))
-	@JoinColumn(name="wheehoo")
-	@OneToMany
-	public List<InvitedGuest> getinviteList() {
-		return inviteList;
-	}
-	
-	//move inviteListAdd to end of file
-	public void addInvite(InvitedGuest invitedGuest){
-		inviteList.add(invitedGuest);
-	}
-	//overload above for fun
-	public void addInvite(List<InvitedGuest> wholeList){
-		for(InvitedGuest invitedGuest : wholeList){
-			inviteList.add(invitedGuest);
-		}
-	}
+//	@JoinColumn(name="wheehoo")
+//	@OneToMany
+//	public List<InvitedGuest> getinviteList() {
+//		return inviteList;
+//	}
+//	
+//	//move inviteListAdd to end of file
+//	public void addInvite(InvitedGuest invitedGuest){
+//		inviteList.add(invitedGuest);
+//	}
+//	//overload above for fun
+//	public void addInvite(List<InvitedGuest> wholeList){
+//		for(InvitedGuest invitedGuest : wholeList){
+//			inviteList.add(invitedGuest);
+//		}
+//	}
 	/**
 	 * @return the tmdbid
 	 */
@@ -151,10 +157,12 @@ public class InviteEntry extends AbstractEntity{
 	/**
 	
 	 */
-	public void setinviteList(List<InvitedGuest> inviteList) {
-		this.inviteList = inviteList;
+//	public void setinviteList(List<InvitedGuest> inviteList) {
+//		this.inviteList = inviteList;
+//	}
+	public void setInvited(List<User> invited){
+		this.invited = invited;
 	}
-	
 
 	/**
 	 * @param tmdbid the tmdbid to set

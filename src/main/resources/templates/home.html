@@ -11,6 +11,16 @@
 	<p th:text = "${random2}">
 	</p>
 	
+	<div th:each = "invite : ${homeUserInvites}">
+		<p th:text = "${invite.message}"></p>
+		<div th:each = "person : ${invite.invited}">
+			
+			<p th:text = "${person.userName}">
+			</p>
+		</div>
+	<!-- 
 	<div th:replace = "base :: inviteDisplay"></div>
+	 -->
+	</div>
 </body>
 </html>

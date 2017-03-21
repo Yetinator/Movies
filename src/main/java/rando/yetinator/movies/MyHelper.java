@@ -5,11 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import rando.yetinator.movies.model.InviteEntry;
-import rando.yetinator.movies.model.InvitedGuest;
 import rando.yetinator.movies.model.User;
 import rando.yetinator.movies.model.UserFriendsList;
 import rando.yetinator.movies.model.dao.InviteEntryDao;
-import rando.yetinator.movies.model.dao.InvitedGuestDao;
 import rando.yetinator.movies.model.dao.MovieLikeDao;
 import rando.yetinator.movies.model.dao.UserDao;
 import rando.yetinator.movies.model.dao.UserFriendsListDao;
@@ -69,7 +67,7 @@ public class MyHelper {
 		
 	}
 	
-	public static void inviteToMovie(User host, List<User> guests, int TMDBid, String message, InviteEntryDao inviteEntryDao, InvitedGuestDao invitedGuestDao){
+	public static void inviteToMovie(User host, List<User> guests, int TMDBid, String message, InviteEntryDao inviteEntryDao){
 		//This takes input and organizes an invite using Movie-system classes and DAO
 		//MyHelper ahelper = new MyHelper();
 		
@@ -88,11 +86,14 @@ public class MyHelper {
 		
 		if(testItem != null){
 		//populate invites
+			testItem.setInvited(guests);
+			inviteEntryDao.save(testItem);
 		for(User guest : guests){
-			InvitedGuest guestEntry = new InvitedGuest(guest, testItem);
+			//InvitedGuest guestEntry = new InvitedGuest(guest, testItem);
 			//testItem.addInvite(guestEntry);
-			testItem.addInvite(guestEntry);
-			invitedGuestDao.save(guestEntry);
+			//testItem.addInvite(guestEntry);
+			//testItem.setInvited(guest);
+			//invitedGuestDao.save(guestEntry);
 		}
 		}
 	}

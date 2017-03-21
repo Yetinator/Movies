@@ -49,7 +49,8 @@ public class ContentController extends AbstractController{
 			//turn these back into users?  
 		}
 	
-		MyHelper.inviteToMovie(useridloggedin, invitedGuests, TMDBid, message, inviteEntryDao, invitedGuestDao);
+		MyHelper.inviteToMovie(useridloggedin, invitedGuests, TMDBid, message, inviteEntryDao);
+		
 		model.addAttribute("random", "Your invite has been created");
 		return "generic";
 		
