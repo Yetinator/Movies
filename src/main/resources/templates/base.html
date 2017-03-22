@@ -11,6 +11,7 @@
 	
 		<div id="navigation" th:fragment="navigation">
 			<a href="/">Home</a><br/>
+			<a href="/home">User Home</a><br/>
 			<a href="/signup">create account</a><br/>
 			<a href="/signin">sign in</a><br/>
 			<a href="/trending">Select movies</a><br/>
@@ -50,16 +51,15 @@
 		</div>
 		
 		<div id="inviteDisplay" th:fragment="inviteDisplay">
-			<h1>You have been invited to a movie!</h1>
-			<h2 th:text="'Would you like to watch ' + ${movie.title} + '?'"></h2>
-			<h2 th:text="'You were invited by ' + ${host.userName}"></h2>
+			<h1 th:text="'Would you like to watch ' + ${correspondingMovies[iterStat.index].title}"></h1>
+			<h3 th:text="${invite.message}"></h3>
+			<h2 th:text="'You were invited by ' + ${invite.invitor.userName}"></h2>
 			<h2>This is the invite list.</h2>
-			<p th:each="invited : ${guestList}">
-				<ul>
-					<li th:text="${invited.userName}"></li>
-				</ul>
-			</p>
-		
+			<ul>
+					<li th:each="aguest : ${invite.invited}" th:text="${aguest.userName}"></li>
+			</ul>
+			<img th:src="${imageBaseUrl} + ${correspondingMovies[iterStat.index].poster_path}" alt="Movie Picture" >
+			</img>
 		</div>
 		
 	</body>

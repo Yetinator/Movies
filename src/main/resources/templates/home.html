@@ -10,18 +10,39 @@
 	</p>
 	<p th:text = "${random2}">
 	</p>
-	
-	<div th:each = "invite : ${homeUserInvites}">
+		<script>
+		function movieObjectPopulate(tmdbid){
+            //This function creates a movie object for user while displaying
+            //a movie through an invite entry where all that is passed to 
+            //the front end it the tmdbid.  It should work similar to a movie
+            //service object. 
+            var baseUrl = "https://api.themoviedb.org/3/movie/";
+            var apiKey = "e34f926e66fa7ffcaaea86c905cf10de";
+            var midUrl = "?api_key=";
+            var url = baseUrl + tmdbid + midUrl + apiKey;
+            $.getJSON (url,
+                function(data) {
+                	//declair some stuff
+                	 $('#movieTitle').text('');
+                    $(data).each(function(id, title, poster_path, overview, release_date, runtime, status, backdrop_path){
+                        
+                        $('#movieTitle').append(this.title);
+                    });
+                });
+            
+}
+		
+		</script>	
+	<div th:each = "invite,iterStat : ${homeUserInvites}">
+		<!-- 
 		<p th:text = "${invite.message}"></p>
-		<p th:text = "'the hosts name is: ' + ${invite.invitor.userName}"></p>
+		<p th:text = "'You have been invited to a movie by: ' + ${invite.invitor.userName}"></p>
 		<div th:each = "person : ${invite.invited}">
-			
-			<p th:text = "${person.userName}">
-			</p>
+			<p th:text = "${person.userName}"></p>
 		</div>
-	<!-- 
-	<div th:replace = "base :: inviteDisplay"></div>
 	 -->
+	<div th:replace = "base :: inviteDisplay"></div>
+	
 	</div>
 </body>
 </html>

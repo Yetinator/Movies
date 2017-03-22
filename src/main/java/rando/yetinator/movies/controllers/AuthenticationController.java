@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import rando.yetinator.movies.ConfigData;
 import rando.yetinator.movies.model.InviteEntry;
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
@@ -53,11 +54,14 @@ public class AuthenticationController extends AbstractController{
 			correspondingMovies.add(aMovie);
 		}
 		//MovieService theMovie = new MovieService(oneInvite.getTmdbid());
+		ConfigData data = new ConfigData();
 		
+		String imageBaseUrl = data.getImageBaseURL(0);
 		
 		//List<User> invitedUsers = oneInvite.getInvited();
 		model.addAttribute("correspondingMovies", correspondingMovies);
 		model.addAttribute("homeUserInvites", homeUserInvites);
+		model.addAttribute("imageBaseUrl", imageBaseUrl);
 		//model.addAttribute("host", loggedIn);
 		//model.addAttribute("guestList", oneEntry.getinviteList());
 		//model.addAttribute("guestList", invitedUsers);
