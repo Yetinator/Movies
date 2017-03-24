@@ -98,7 +98,7 @@ public class PostMovieController extends AbstractController{
 			//user.setLike(like);//TODO - GET RID OF THIS
 			user.addLike(like);
 			MovieLikeDao.save(like);
-			model.addAttribute("random", "Post trending");
+			model.addAttribute("random", "You have liked a movie.  Congrats!");
 		}else{
 			model.addAttribute("random", "Bad Post");
 		}

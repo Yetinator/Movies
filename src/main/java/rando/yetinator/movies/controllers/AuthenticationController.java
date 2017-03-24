@@ -117,13 +117,14 @@ public class AuthenticationController extends AbstractController{
 			HttpSession session = arequest.getSession();
 			setUserInSession(session, currentUser);
 			//this attribute is for the home link
-			model.addAttribute("random", "You are signed in as " + name);
+			model.addAttribute("random", "Welcome " + name);
+			model.addAttribute("random2", "What would you like to do?");
 			
 		}else{
 			//error logging on!
 		}
 		
-		return "generic";
+		return "redirect:/home";
 	}
 	
 	@RequestMapping(value = "/signout", method = RequestMethod.GET)
