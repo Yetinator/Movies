@@ -46,11 +46,17 @@ public class ContentController extends AbstractController{
 		String message = arequest.getParameter("message");
 		List<User> invitedGuests = new ArrayList();
 		for(String guestid : invitedGuestids){
-			System.out.println("invited guests are: " + guestid);
-			invitedGuests.add(UserDao.findByuid(Integer.parseInt(guestid)));
+			User aUser = UserDao.findByuid(Integer.parseInt(guestid));
+			//check to see if the list already contains
+			if(!invitedGuests.contains(aUser)){
+				invitedGuests.add(aUser);
+			}
 			//turn these back into users?  
 		}
-	
+		if(!invitedGuests.contains(useridloggedin)){
+			invitedGuests.add(useridloggedin);
+		}
+		//duplicates checked upon list creation >> and decide whether the inviter ends up on this list or not.
 		MyHelper.inviteToMovie(useridloggedin, invitedGuests, TMDBid, message, inviteEntryDao);
 		
 		model.addAttribute("random", "Your invite has been created");
