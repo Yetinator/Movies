@@ -2,38 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:fragment="header">
 		<title>Movies</title>
-		<link th:href="@{/css/styles.css}" rel="stylesheet" />
+		
 		<script th:src="@{/js/script.js}"></script>
 		<script type="text/javascript" src="../webjars/jquery/3.1.1/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel='stylesheet' href='../webjars/bootstrap/3.2.0/css/bootstrap.min.css'/>
+		<!-- <link th:href="@{/css/styles.css}" rel="stylesheet" /> -->
 	</head>	
 	
 	<body>
 	
 		<div id="navigation" th:fragment="navigation">
-			<a href="/">Home</a><br/>
-			<a href="/home">User Home</a><br/>
-			<a href="/signup">create account</a><br/>
-			<a href="/signin">sign in</a><br/>
-			<a href="/trending">Select movies</a><br/>
-			<a href="/userlist">user list</a><br/>
-			<a href="/signout">Sign out</a>
+			
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <!-- Brand and toggle get grouped for better mobile display -->
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="/home">Home <small>(User)</small></a>
+			    </div>
+			
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			      <ul class="nav navbar-nav">
+			        <li class="active"><a href="/trending">Like Movies <span class="sr-only">(current)</span></a></li>
+			        <li><a href="/userlist">Other Users</a></li>
+			       
+			      </ul>
+			      <form class="navbar-form navbar-left">
+			        <div class="form-group">
+			          <input type="text" class="form-control" placeholder="Search"></input>
+			        </div>
+			        <button type="submit" class="btn btn-default">Submit</button>
+			      </form>
+			      <ul class="nav navbar-nav navbar-right">
+			        <li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Options <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+			            <li><a href="/signin">Sign In</a></li>
+			            <li><a href="/signout">Sign Out</a></li>
+			            <li role="separator" class="divider"></li>
+			            <li><a href="/signup">Create Account</a></li>
 
+
+			          </ul>
+			        </li>
+			      </ul>
+			    </div><!-- /.navbar-collapse -->
+			  </div><!-- /.container-fluid -->
+			</nav>
+			
 		</div>
 		
 		<div th:text="${#httpSession.getAttribute('userSessionKey')}">
 		</div>
 		
-		<div id="smallMovieDisplay" th:fragment="smallMovieDisplay">
-			<h1 th:text="${movieTemplateTitle}" >
-			</h1>
-			<h1 th:text="${movie.title}" >
-			</h1>
+		<div id="smallMovieDisplay" th:fragment="smallMovieDisplay" class="jumbotron">
+			<div class="row">
+			<!--  <h1 th:text="${movieTemplateTitle}" >
+			</h1>-->
+			
+			<div class="col-xs-6 col-md-4 col-lg-4">
 			<img th:src="${imageBaseUrl} + ${movie.poster_path}" alt="Movie Picture" >
 			</img>
-			<p th:text="${movie.overview}" style="width: 300px;" >Movie description here
+			</div>
+			
+			
+			
+			<div class="col-xs-6 col-md-4 col-lg-4">
+			<h1 th:text="${movie.title}" >
+			</h1>
+		
+			<p th:text="${movie.overview}" >Movie description here
 			</p>
-			<script type="text/javascript">"${movieTemplateTitle}"</script>
+			</div>
+			
+			<div class="clearfix"></div>
+			<!-- <script type="text/javascript">"${movieTemplateTitle}"</script> -->
 		</div>
+		</div><!-- end rows -->
 		
 		<div id="movieInviteForm" th:fragment="movieInviteForm">
 			<h1>Invite your friends!</h1>
@@ -48,7 +100,7 @@
 			</form>
 		</div>
 		
-		<div id="inviteDisplay" th:fragment="inviteDisplay">
+		<div id="inviteDisplay" th:fragment="inviteDisplay" class="jumbotron">
 			<h1 th:text="'Would you like to watch ' + ${correspondingMovies[iterStat.index].title}"></h1>
 			<h3 th:text="${invite.message}"></h3>
 			<h2 th:text="'You were invited by ' + ${invite.invitor.userName}"></h2>

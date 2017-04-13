@@ -5,7 +5,8 @@
 	<div th:replace = "base :: navigation"></div>
 	
 	<h1 th:text="${userTemplateTitle}"></h1>
-	<div id="movieList">
+	<div class="row">
+	<div id="movieList" class="col-xs-6 col-md-3">
 		<h2 th:text="${user.userName} + '\'s Movie List'"></h2>
 		<div th:each = "movie : ${movieList}">
 			<a th:href="@{../moviePage(movieId=${movie.tmdbid})}" th:text = "${movie.title}">problem</a>
@@ -13,13 +14,14 @@
 	</div>
 	
 	
-	<div id="friendList">
+	<div id="friendList" class="col-xs-6 col-md-3">
 		<h2 th:text="${user.userName} + '\'s Friend List'"></h2>
 		<div th:each = "friend : ${friends}">
 			<a th:href="@{../user/{usrnm}(usrnm=${friend.userName})}" th:text = "${friend.userName}">
 			</a>	
 		</div>
 	</div>
+	</div> <!-- End row class -->
 	<form method="post">
 		<label>Would you like to friend this friend?</label><br/>
 			<button th:text = "'Friend ' + ${user.userName} + '?'" th:value = "${user.uid}" name = "userid" th:if="${notFriendsAlready}">

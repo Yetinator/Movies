@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
 <body>
-	<div th:replace = "base :: navigation"></div>
+<div >
+	<div th:replace = "base :: navigation" ></div>
 	
 	<h1>Movies Home</h1>
 		<div th:text = "${fromController}"></div>
@@ -10,6 +11,7 @@
 	</p>
 	<p th:text = "${random2}">
 	</p>
+	
 		<script>
 		function movieObjectPopulate(tmdbid){
             //This function creates a movie object for user while displaying
@@ -43,6 +45,7 @@
 	 -->
 	<div th:replace = "base :: inviteDisplay"></div>
 	
+	</div>
 	</div>
 </body>
 </html>

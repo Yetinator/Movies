@@ -6,7 +6,7 @@
 	<div th:replace = "base :: navigation"></div>
 	
 	<!-- movies loop to display movies of same title -->
-    <div th:each = "movie : ${movies}">
+    <div th:each = "movie : ${movies}" class="jumbotron">
   	<div th:replace = "base :: smallMovieDisplay"></div>
   	<form method = "post" >
   		<input type = "hidden" th:value = "${movie.id}" name = "movieId" ></input>
