@@ -154,11 +154,14 @@ public class PostMovieController extends AbstractController{
 		}//end for loop
 		
 		
-		
+		//TODO - move this logic to a function in an appropriate class to use to deal with duplicate freinds and 
+		//displaying stuff like it's meant to here
 		//test to see if logged in is friends with page owner
 		boolean notFriendsAlready = true;
-		if(false){
+		//if currentUser friendlist contains userOnPage make false (userfriendlistdao)
+		if(UserFriendsListDao.findByUserOne(currentUser.getUid()).contains(userOnPage)){
 			//TODO - if logged in user friends list contains "user" from above set notFriendsAlready to false;
+			notFriendsAlready = false;
 		}
 		
 		//model.addAttribute("movieObjects", movieObjects);//actual movieservice objects in an array

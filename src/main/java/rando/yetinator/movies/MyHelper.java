@@ -74,17 +74,15 @@ public class MyHelper {
 		
 		InviteEntry testItem;
 		try{
+			//create an inviteEntry item
 			int hostid = host.getUid();
-			System.out.println("the host uid is " + hostid);
-			//testItem = new InviteEntry(host,TMDBid, message);
 			testItem = new InviteEntry(host,TMDBid, message);
-			System.out.println("the test item is: " + testItem.getMessage());
 			inviteEntryDao.save(testItem);
 		}catch(Error e){
 			System.out.println("Problem creating and saving InviteEntry Object.");
 			testItem = null;
 		}
-		
+		//Todo - make the list of guests better.  Get rid of duplicates?  Add inviter as a guest?  
 		if(testItem != null){
 		//populate invites
 			testItem.setInvited(guests);
