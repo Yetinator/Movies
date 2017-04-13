@@ -201,6 +201,8 @@ public class PostMovieController extends AbstractController{
 	
 	@RequestMapping("/moviePage")
 	public String moviePage(Model model, HttpServletRequest arequest){
+		//current user
+		User currentUser = getUserFromSession(arequest.getSession());
 		//This maps a page displaying the movie and all its fun attributes and pictures and stuff
 		int movieId = Integer.parseInt(arequest.getParameter("movieId"));
 		//create movie object (need to pass in id)
@@ -214,12 +216,23 @@ public class PostMovieController extends AbstractController{
 		for(MovieLike like : lotsALikes){
 			usersWhoLike.add(like.getUser());
 		}
+		//create a list of friends who like the movie (only friends)
+		List<User> friendsWhoLike = new ArrayList<User>();
+		//List<User> friends = currentUser.get
+		for(User user : usersWhoLike){
+			if (true){//(user.isMutual(currentUser)){
+				if(!user.equals(currentUser)){
+					friendsWhoLike.add(user);
+				}
+			}
+		}
 		
 		
 		//pass in movie object
 		model.addAttribute("movie", movie);
 		model.addAttribute("imageBaseUrl", imageBaseUrl);
 		model.addAttribute("usersWhoLike", usersWhoLike);
+		model.addAttribute("friendsWhoLike", usersWhoLike);
 		
 		return "movieDisplay";
 	}

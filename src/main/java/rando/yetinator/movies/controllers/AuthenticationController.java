@@ -35,7 +35,7 @@ public class AuthenticationController extends AbstractController{
 	public String home(Model model){
 		
 		model.addAttribute("random", "Welcome to my fancy Movies page. ");
-		model.addAttribute("random2", "This is a sight where you can friend people with similar movie tastes and if you have a movie like in common a fellow movie goer will be recomended.");
+		model.addAttribute("random2", "On this site you: make friends, like movies, invite friends with similar movie tastes to a movie.");
 		return "generic";
 	}
 	
@@ -66,7 +66,7 @@ public class AuthenticationController extends AbstractController{
 		//model.addAttribute("guestList", oneEntry.getinviteList());
 		//model.addAttribute("guestList", invitedUsers);
 		model.addAttribute("random", "Welcome to my fancy Movies page. ");
-		model.addAttribute("random2", "This is a sight where you can friend people with similar movie tastes and if you have a movie like in common a fellow movie goer will be recomended.");
+		model.addAttribute("random2", "On this site you: make friends, like movies, invite friends with similar movie tastes to a movie.");
 		
 		
 		return "home";

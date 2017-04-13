@@ -145,22 +145,32 @@ public class User extends AbstractEntity {
 	}
 	
 	public boolean isMutual(User userTwo){
+		//Not currently working
 		//UserOne is a number userTwo is a number
 	//if UserOne exists as userTwo in a list where userTwo is primary then true else false
+		List<UserFriendsList> friendEntries = UserFriendsListDao.findByUserOne(userTwo);
+		for (UserFriendsList friend : friendEntries){
+			System.out.println("The friend number is: " + friend.getUserOne() + "  " + friend.getUserTwo());
+		}
+		/*
 		if(relationshipExists(this.getUid() ,userTwo.getUid())){
 			if(relationshipExists(userTwo.getUid(), this.getUid())){
 				return true;
 			}
 		}
+		*/
 		
 		return false;
 	}
 	
 	private boolean relationshipExists(int userOneUid, int userTwoUid){
+		//Not currently working
 		//checks to see if userTwo is on userOne's friend list (but not visa versa)
 		System.out.println(userOneUid);
 		System.out.println(userTwoUid);
 		List<UserFriendsList> friendEntries = UserFriendsListDao.findByUserOne(userOneUid);//TODO - problem here per waldo
+		//List<UserFriendsList> friendEntries = UserFriendsListDao.findByUserOne(userOneUid);//TODO - problem here per waldo
+		System.out.println("Waldo");
 		for(UserFriendsList entry : friendEntries){
 			if(entry.getUserTwo() == userTwoUid){
 				return true;

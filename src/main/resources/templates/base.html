@@ -40,7 +40,7 @@
 			<form action="/invite" method="post">
 				<label>Send a personalized message</label>
 				<input type="text" name="message" value="Please attend my movie viewing" size="100"></input>
-				<ul th:each = "user : ${usersWhoLike}">
+				<ul th:each = "user : ${friendsWhoLike}">
 					<input type = "checkbox" name="invited" th:text="${user.userName}" th:value="${user.uid}"></input>
 				</ul>
 				<input type="hidden" name = "movieid" th:value="${movie.id}"></input>
