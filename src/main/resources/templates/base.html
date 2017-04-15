@@ -99,18 +99,46 @@
 				<button type="submit">Invite</button>
 			</form>
 		</div>
+		<!-- Movie Invite Display
+			This is for the user's home page -->
+		<div id="inviteDisplay" th:fragment="inviteDisplay" class="jumbotron" style="width:1200px">
+			<div class ="row"><!-- header of invite -->
+			
+				<h2 th:text="'Would you like to watch ' + ${correspondingMovies[iterStat.index].title}"></h2>
+				
+			</div><!-- end header of invite -->
+			
+			<div class="row"><!-- body of invite -->
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 "><!-- col1 -->
+					<div class="container">
+					<img th:src="${imageBaseUrl} + ${correspondingMovies[iterStat.index].poster_path}" alt="Movie Picture" ></img>
+					</div>
+				</div><!-- end col1 -->
+				
+				<div class="col-xs-12 col-sm-12 col-lg-6 col-xl-6"><!-- col2 -->
+					<h4 ><b>HOST:&nbsp;</b> <span th:text="${invite.invitor.userName}"></span></h4>
+					<h4 ><b>Message:&nbsp;</b><span th:text="${invite.message}"></span></h4>
+					
+					<h4><b>Invite List:</b></h4>
+					<ul>
+							<li th:each="aguest : ${invite.invited}" th:text="${aguest.userName}"></li>
+					</ul>
+				</div><!-- end col2 -->
+				
+				
+			</div><!-- end rows / body of invite -->
+		</div><!-- end Invite display -->
 		
-		<div id="inviteDisplay" th:fragment="inviteDisplay" class="jumbotron">
-			<h1 th:text="'Would you like to watch ' + ${correspondingMovies[iterStat.index].title}"></h1>
-			<h3 th:text="${invite.message}"></h3>
-			<h2 th:text="'You were invited by ' + ${invite.invitor.userName}"></h2>
-			<h2>This is the invite list.</h2>
-			<ul>
-					<li th:each="aguest : ${invite.invited}" th:text="${aguest.userName}"></li>
-			</ul>
-			<img th:src="${imageBaseUrl} + ${correspondingMovies[iterStat.index].poster_path}" alt="Movie Picture" >
-			</img>
-		</div>
+		<!-- footBanner 
+			used at the bottom of every page to display the necessary advertisements-->
+		<div id="footerBanner" th:fragment="footerBanner" class="jumbotron">
+			<div class="row">
+			<div class="col-xs-6 col-md-3 col-lg-12 ">
+				<img class="pull-right" src="https://www.themoviedb.org/assets/static_cache/9b3f9c24d9fd5f297ae433eb33d93514/images/v4/logos/408x161-powered-by-rectangle-green.png"></img>
+			</div>
+			</div>
+		
+		</div><!-- end footBanner -->
 		
 	</body>
 </html>
