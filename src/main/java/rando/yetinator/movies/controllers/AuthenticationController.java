@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import rando.yetinator.movies.ConfigData;
+import rando.yetinator.movies.MyHelper;
 import rando.yetinator.movies.model.InviteEntry;
 import rando.yetinator.movies.model.MovieDictionary;
 import rando.yetinator.movies.model.MovieLike;
@@ -55,13 +56,34 @@ public class AuthenticationController extends AbstractController{
 		}
 		//MovieService theMovie = new MovieService(oneInvite.getTmdbid());
 		ConfigData data = new ConfigData();
-		
 		String imageBaseUrl = data.getImageBaseURL(0);
 		
+		//Populate user friend list
+		//list of friends
+				List<UserFriendsList> friendNums = UserFriendsListDao.findByUserOne(loggedIn.getUid());
+				List<User> friends = new ArrayList<User>();
+				List<User> mutualFriends = new ArrayList<User>();
+				//create a list of friends using "userfriendlist" DAO uid
+				//also a list of mutual friends
+				for(UserFriendsList i : friendNums){
+					int uidsOfUserOnPageFriends = i.getUserTwo();
+					User AFriendOfUserOnPage = UserDao.findByuid(uidsOfUserOnPageFriends);
+					friends.add(AFriendOfUserOnPage);
+					//mutual friends through helper class
+					if(MyHelper.AreMutualFriends(AFriendOfUserOnPage, loggedIn, UserFriendsListDao)){
+						mutualFriends.add(AFriendOfUserOnPage);
+					}//end if
+				}//end for loop
+		
+		//Populate user movie-like list
+		List<MovieLike> movieList = loggedIn.getLikes();
+
 		//List<User> invitedUsers = oneInvite.getInvited();
 		model.addAttribute("correspondingMovies", correspondingMovies);
 		model.addAttribute("homeUserInvites", homeUserInvites);
 		model.addAttribute("imageBaseUrl", imageBaseUrl);
+		model.addAttribute("friends", friends);
+		model.addAttribute("movieList", movieList);
 		//model.addAttribute("host", loggedIn);
 		//model.addAttribute("guestList", oneEntry.getinviteList());
 		//model.addAttribute("guestList", invitedUsers);

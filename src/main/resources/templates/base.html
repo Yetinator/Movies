@@ -34,15 +34,19 @@
 			        <li><a href="/userlist">Other Users</a></li>
 			       
 			      </ul>
+			      
+			      <!--  
 			      <form class="navbar-form navbar-left">
 			        <div class="form-group">
 			          <input type="text" class="form-control" placeholder="Search"></input>
 			        </div>
 			        <button type="submit" class="btn btn-default">Submit</button>
 			      </form>
+			      -->
+			      
 			      <ul class="nav navbar-nav navbar-right">
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Options <span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><b>Account Options <span class="caret"></span></b></a>
 			          <ul class="dropdown-menu">
 			            <li><a href="/signin">Sign In</a></li>
 			            <li><a href="/signout">Sign Out</a></li>
@@ -108,7 +112,7 @@
 				
 			</div><!-- end header of invite -->
 			
-			<div class="row"><!-- body of invite -->
+			<div class="row"><!-- body of invite Section-->
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 "><!-- col1 -->
 					<div class="container">
 					<img th:src="${imageBaseUrl} + ${correspondingMovies[iterStat.index].poster_path}" alt="Movie Picture" ></img>
