@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
-<body>
+<body class="scheme-primary">
 <div ><!-- major container -->
 	<div th:replace = "base :: navigation" ></div>
 	
@@ -37,7 +37,7 @@
 		
 		</script>	
 	<!-- Start main homepage master template -->
-	
+	<div class="container-fluid">
 	<div class="row"><!-- master template row -->
 	<div class="col-xs-12 col-sm-12 col-med-6 col-lg-6"><!-- column spacer -->
 	<div th:each = "invite,iterStat : ${homeUserInvites}">
@@ -72,7 +72,7 @@
 	
 	</div><!-- end master template row -->
 		<!-- end main page master template -->
-		
+	</div><!-- end container div -->	
 	<div th:replace = "base :: footerBanner"></div>
 	</div><!-- End major container -->
 </body>

@@ -7,7 +7,7 @@
 		<script type="text/javascript" src="../webjars/jquery/3.1.1/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="../webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<link rel='stylesheet' href='../webjars/bootstrap/3.2.0/css/bootstrap.min.css'/>
-		<!-- <link th:href="@{/css/styles.css}" rel="stylesheet" /> -->
+		<link th:href="@{/css/styles.css}" rel="stylesheet" /> 
 	</head>	
 	
 	<body>
@@ -30,7 +30,7 @@
 			    <!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="/trending">Like Movies <span class="sr-only">(current)</span></a></li>
+			        <li ><a href="/trending">Like Movies <span class="sr-only">(current)</span></a></li>
 			        <li><a href="/userlist">Other Users</a></li>
 			       
 			      </ul>
@@ -66,7 +66,7 @@
 		<div th:text="${#httpSession.getAttribute('userSessionKey')}">
 		</div>
 		
-		<div id="smallMovieDisplay" th:fragment="smallMovieDisplay" class="jumbotron">
+		<div id="smallMovieDisplay" th:fragment="smallMovieDisplay">
 			<div class="row">
 			<!--  <h1 th:text="${movieTemplateTitle}" >
 			</h1>-->
@@ -105,7 +105,7 @@
 		</div>
 		<!-- Movie Invite Display
 			This is for the user's home page -->
-		<div id="inviteDisplay" th:fragment="inviteDisplay" class="jumbotron" style="width:1200px">
+		<div id="inviteDisplay" th:fragment="inviteDisplay"><!--  style="width:1200px"> --> 
 			<div class ="row"><!-- header of invite -->
 			
 				<h2 th:text="'Would you like to watch ' + ${correspondingMovies[iterStat.index].title}"></h2>
@@ -135,7 +135,7 @@
 		
 		<!-- footBanner 
 			used at the bottom of every page to display the necessary advertisements-->
-		<div id="footerBanner" th:fragment="footerBanner" class="jumbotron">
+		<div id="footerBanner" th:fragment="footerBanner">
 			<div class="row">
 			<div class="col-xs-6 col-md-3 col-lg-12 ">
 				<img class="pull-right" src="https://www.themoviedb.org/assets/static_cache/9b3f9c24d9fd5f297ae433eb33d93514/images/v4/logos/408x161-powered-by-rectangle-green.png"></img>

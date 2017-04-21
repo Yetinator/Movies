@@ -1,10 +1,19 @@
-h1 {
+h1, h2, h3, h4, h5, h6{
 	color: #F0810F;
-	background: #063852;
+	//background: #063852;
 	display: block;
 	text-shadow: 3px 2px 3px #E6DF44;
 }
 
+.scheme-primary {
+    background-color: #063852;
+    color: #E6DF44;
+}
+.navbar-default, .navbar-default *{
+	background: #011A27;
+	color: #E6DF44;
+}
+/*
 p {
 	background:#063852;
 	color:#E6DF44;
@@ -81,3 +90,4 @@ a:visited {
 a:hover {
     color: red;
 }
+*/
