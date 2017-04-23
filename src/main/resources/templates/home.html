@@ -4,14 +4,16 @@
 <body class="scheme-primary">
 <div ><!-- major container -->
 	<div th:replace = "base :: navigation" ></div>
-	
-	<h1>Movies Home</h1>
-		<div th:text = "${fromController}"></div>
-	<p th:text = "${random}">
+	<div class="container ">
+	<div class="row justify-content-start">
+	<h1 class="text-left" >Movies Home</h1>
+		<div class="text-left" th:text = "${fromController}"></div>
+	<p class="text-left" th:text = "${random}">
 	</p>
-	<p th:text = "${random2}">
+	<p class="text-left" th:text = "${random2}">
 	</p>
-	
+	</div>
+	</div>
 		<script>
 		//TODO - remove this script move to back end
 		function movieObjectPopulate(tmdbid){
@@ -39,7 +41,7 @@
 	<!-- Start main homepage master template -->
 	<div class="container-fluid">
 	<div class="row"><!-- master template row -->
-	<div class="col-xs-12 col-sm-12 col-med-6 col-lg-6"><!-- column spacer -->
+	<div class="col-xs-12 col-sm-12 col-med-8 col-lg-6 scrollable"><!-- column spacer -->
 	<div th:each = "invite,iterStat : ${homeUserInvites}">
 		<!-- 
 		<p th:text = "${invite.message}"></p>
@@ -54,7 +56,7 @@
 	</div><!-- column spacer -->
 	
 	<!-- list of movies liked by loggedin -->
-	<div class="col-xs-12 col-sm-12 col-med-3 col-lg-3">
+	<div class="col-xs-12 col-sm-12 col-med-4 col-lg-3">
 	<h3>These are the movies you like!</h3>
 	<div th:each = "movie : ${movieList}">
 			<a th:href="@{../moviePage(movieId=${movie.tmdbid})}" th:text = "${movie.title}">problem</a>
@@ -62,7 +64,7 @@
 	</div><!-- End Loggedin -->
 	
 	<!-- list of friends -->
-	<div class="col-xs-12 col-sm-12 col-med-3 col-lg-3">
+	<div class="col-xs-12 col-sm-12 col-med-4 col-lg-3">
 	<h3>These are your friends!</h3>
 	<div th:each = "friend : ${friends}">
 			<a th:href="@{../user/{usrnm}(usrnm=${friend.userName})}" th:text = "${friend.userName}">

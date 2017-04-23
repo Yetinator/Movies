@@ -2,15 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
 
-<body>
+<body class="scheme-primary">
 	<div th:replace = "base :: navigation"></div>
 	
 	<script type="text/javascript" src="webjars/jquery/3.1.1/dist/jquery.min.js"></script>
     
 
+	<div class="container">
 	
-	<h1>These movies are trending</h1>
+	<h1>Like a movie page!!!</h1>
 	<br/>
+	<div class="row">
+	<div class="col-xs-12 col-sm-12 col-med-6 col-lg-6">
 	<h2>Pick a movie</h2>
 	<form method = "post">
 		<!-- This is where a for loop goes with available movies It should come from an array queried to not suck 
@@ -27,12 +30,65 @@
 		<br/>
 		<br/>
 		<br/>
-		<button>Submit DropDown</button>
+		<button class="btn btn-default">Submit DropDown</button>
 	</form>
+	</div><!-- End "form" column -->
+	<div class="col-xs-12 col-sm-12 col-med-6 col-lg-6">
+	<!-- carousel start up -->
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+		  	<ol class="carousel-indicators">
+		    	<!--  <li th:each = "movie,iterStat: ${movies}" data-target="#carousel-example-generic" data-slide-to="${findNumberOfMovies(movies)}" ></li>-->
+		    	<script> createCarouselIndicators() </script>
+	    	</ol>
 	
+		<!-- Wrapper for slides -->
+		
+		  <div class="carousel-inner" role="listbox">
+		    <!-- 
+		    <div class="item active">
+		      <img th:src="${imageBaseUrl} + ${correspondingMovies[iterStat.index].poster_path}" alt="Movie Picture"></img>
+		      <div class="carousel-caption" th:text="${movie.title}">
+		        
+		      </div>
+		    </div>
+		     -->
+		    <!--  <div th:each = "movie : ${movies}">--><!-- movie : movies is movieLikes not actual movies -->
+		    <div class="item active" th:each = "movie : ${movies}">
+		      <img th:src="${imageBaseUrl} + ${movie.poster_path}" alt="Movie Picture"></img> 
+		      <div class="carousel-caption" th:text="${movie.title}">
+		        
+		      </div>
+		    </div>
+		 <!--  </div>--> 
+	  </div><!-- end movie creation loop -->
+	
+		<!-- Controls -->
+		  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+		    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+		    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		
+	
+		</div>
+	</div><!-- End "Carosaul" -->
+	</div><!-- End "row" -->
+	</div><!-- End "container" -->
 	
 
 	
-
+	<script>function findNumberOfMovies(movies){
+				return movies.size();
+				}
+				
+			function createCarouselIndicators(){
+				var line = "<li th:each = "movie,iterStat: ${movies}" data-target="#carousel-example-generic" data-slide-to="${findNumberOfMovies(movies)}" ></li>";
+				return line;
+			}
+	</script>
 </body>
 </html>

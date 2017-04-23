@@ -31,8 +31,15 @@ public class PostMovieController extends AbstractController{
 		//TODO - narrow this to a list of the most popular or order by popularity
 		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
 		List<MovieLike> movies = MovieLikeDao.findAll(a);
+		List<MovieService> movieObjects = new ArrayList<MovieService>();
+		for(MovieLike movie:movies){
+			movieObjects.add(new MovieService(movie.getTmdbid()));
+		}
+		ConfigData data = new ConfigData();
+		String imageBaseUrl = data.getImageBaseURL(0);
 		
-		model.addAttribute("movies", movies);
+		model.addAttribute("movies", movieObjects);//these are movieLikes
+		model.addAttribute("imageBaseUrl", imageBaseUrl);
 		
 		
 		

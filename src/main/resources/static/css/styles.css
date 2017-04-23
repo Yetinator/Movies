@@ -13,6 +13,49 @@ h1, h2, h3, h4, h5, h6{
 	background: #011A27;
 	color: #E6DF44;
 }
+.scrollable{
+	height:800px;
+	overflow:auto;
+}
+
+.btn-default {
+	background: #F0810F;
+}
+
+#inviteDisplay{
+	position:relative;
+	border-style: solid;
+	border-color: #011A27;
+	padding:10px;
+}
+#inv-header{
+	padding-left:10px;
+}
+#inv-body{
+	position:relative;
+}
+#inv-image{
+	margin-left:0 auto;
+	
+	padding:10px;
+}
+#inv-info{
+	
+	padding:10px;
+	position: absolute;
+	left:325px;
+	top:10px;
+	
+	
+	height: auto;
+    margin: 10px;
+    border: 3px solid #E6DF44; 
+}
+
+#searchBox2{
+	color:black;
+	width: 400px;
+}
 /*
 p {
 	background:#063852;
