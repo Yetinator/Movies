@@ -10,7 +10,7 @@
 		<link th:href="@{/css/styles.css}" rel="stylesheet" /> 
 	</head>	
 	
-	<body>
+	<body >
 	
 		<div id="navigation" th:fragment="navigation">
 			
@@ -100,7 +100,7 @@
 					<input type = "checkbox" name="invited" th:text="${user.userName}" th:value="${user.uid}"></input>
 				</ul>
 				<input type="hidden" name = "movieid" th:value="${movie.id}"></input>
-				<button type="submit">Invite</button>
+				<button class="btn btn-default" type="submit">Invite</button>
 			</form>
 		</div>
 		

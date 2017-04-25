@@ -13,6 +13,7 @@
 	<h1>Like a movie page!!!</h1>
 	<br/>
 	<div class="row">
+	<!-- pick a movie box form -->
 	<div class="col-xs-12 col-sm-12 col-med-6 col-lg-6">
 	<h2>Pick a movie</h2>
 	<form method = "post">
@@ -34,31 +35,36 @@
 	</form>
 	</div><!-- End "form" column -->
 	<div class="col-xs-12 col-sm-12 col-med-6 col-lg-6">
+		<h3>These movie's are popular!</h3>
 	<!-- carousel start up -->
 		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 			<!-- Indicators -->
 		  	<ol class="carousel-indicators">
-		    	<!--  <li th:each = "movie,iterStat: ${movies}" data-target="#carousel-example-generic" data-slide-to="${findNumberOfMovies(movies)}" ></li>-->
-		    	<script> createCarouselIndicators() </script>
+		    	<li th:each = "movie,iterStat: ${movies}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat.index}" ></li>
+		    	<li  data-target="#carousel-example-generic" data-slide-to="37" ></li>
 	    	</ol>
 	
 		<!-- Wrapper for slides -->
 		
 		  <div class="carousel-inner" role="listbox">
-		    <!-- 
+		     
 		    <div class="item active">
-		      <img th:src="${imageBaseUrl} + ${correspondingMovies[iterStat.index].poster_path}" alt="Movie Picture"></img>
-		      <div class="carousel-caption" th:text="${movie.title}">
+		      <img src="http://cdn2-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-8.jpg" alt="Movie Picture"></img>
+		      <div class="carousel-caption" text="puppy">
 		        
 		      </div>
 		    </div>
-		     -->
+		   
 		    <!--  <div th:each = "movie : ${movies}">--><!-- movie : movies is movieLikes not actual movies -->
-		    <div class="item active" th:each = "movie : ${movies}">
+		    <div class="item " th:each = "movie : ${movies}">
 		      <img th:src="${imageBaseUrl} + ${movie.poster_path}" alt="Movie Picture"></img> 
 		      <div class="carousel-caption" th:text="${movie.title}">
 		        
 		      </div>
+		      <form method="post">
+		      <input type = "hidden" th:value = "${movie.id}" name = "movieId" ></input>
+		      <button class="btn btn-default"  formaction = "/movieLikeSelected">like this movie</button>
+		      </form>
 		    </div>
 		 <!--  </div>--> 
 	  </div><!-- end movie creation loop -->

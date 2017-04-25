@@ -4,7 +4,9 @@ h1, h2, h3, h4, h5, h6{
 	display: block;
 	text-shadow: 3px 2px 3px #E6DF44;
 }
-
+input {
+	color:black;
+}
 .scheme-primary {
     background-color: #063852;
     color: #E6DF44;
@@ -55,6 +57,9 @@ h1, h2, h3, h4, h5, h6{
 #searchBox2{
 	color:black;
 	width: 400px;
+}
+.jumbotron{
+	background:grey;
 }
 /*
 p {

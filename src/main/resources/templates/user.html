@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
-<body>
+<body class="scheme-primary">
 	<div th:replace = "base :: navigation"></div>
 	
 	<h1 th:text="${userTemplateTitle}"></h1>
@@ -24,7 +24,7 @@
 	</div> <!-- End row class -->
 	<form method="post">
 		<label>Would you like to friend this friend?</label><br/>
-			<button th:text = "'Friend ' + ${user.userName} + '?'" th:value = "${user.uid}" name = "userid" th:if="${notFriendsAlready}">
+			<button class = "btn btn-default" th:text = "'Friend ' + ${user.userName} + '?'" th:value = "${user.uid}" name = "userid" th:if="${notFriendsAlready}">
 			
 			</button>
 			<br/>

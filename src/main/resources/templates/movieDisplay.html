@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace = "base :: header"></header>
 
-<body>
+<body class="scheme-primary">
 	<div th:replace = "base :: navigation"></div>
 	
 	
@@ -12,7 +12,7 @@
 		<form method = "post" class="col-xs-12 col-md-12">
 		
 			<label>Like this movie <div th:text = "${movie.title}"></div></label>
-			<button formaction="../movieLikeSelected" name="movieId" th:value="${movie.id}">submit</button>
+			<button class="btn btn-default" formaction="../movieLikeSelected" name="movieId" th:value="${movie.id}">submit</button>
 		</form>
 	</div><!-- End Rows -->
 	<h1>Fellow Fans!</h1>
