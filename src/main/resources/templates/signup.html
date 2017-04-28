@@ -3,7 +3,7 @@
 <header th:replace = "base :: header"></header>
 <body class="scheme-primary">
 	<div th:replace = "base :: navigation"></div>
-	
+	<div class="container">
 	<h1>Sign Up / Create an Account</h1>
 	<form method="post">
 				
@@ -18,7 +18,7 @@
 			<br/>
 		<button class="btn btn-default">Submit</button>
 	</form>
-	
-
+	<div th:replace = "base :: footerBanner"></div>
+	</div><!-- End page Container -->
 </body>
 </html>

@@ -32,8 +32,16 @@ public class PostMovieController extends AbstractController{
 		org.springframework.data.domain.Sort a = new org.springframework.data.domain.Sort("title");
 		List<MovieLike> movies = MovieLikeDao.findAll(a);
 		List<MovieService> movieObjects = new ArrayList<MovieService>();
+		List<Integer> idCheck = new ArrayList<Integer>();
+		//populate a list of unique movieService Objects from all movieLike objects, not concerned about who liked them
+		int id;
 		for(MovieLike movie:movies){
-			movieObjects.add(new MovieService(movie.getTmdbid()));
+			id = movie.getTmdbid();
+			if(!(idCheck.contains(id))){
+				movieObjects.add(new MovieService(id));
+				idCheck.add(id);
+			}
+			
 		}
 		ConfigData data = new ConfigData();
 		String imageBaseUrl = data.getImageBaseURL(0);
