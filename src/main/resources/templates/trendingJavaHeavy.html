@@ -64,10 +64,17 @@
 		      </div>
 		      -->
 		      <div th:replace="base :: smallMovieDisplay"></div>
-		      <form method="post">
-		      <input type = "hidden" th:value = "${movie.id}" name = "movieId" ></input>
-		      <button class="btn btn-default"  formaction = "/movieLikeSelected">like this movie</button>
-		      </form>
+		      
+		      <!-- This Div is for the carousel interactive buttons -->
+		      <div id="carousel-button-sequence">
+			      <form method="post">
+			      <input type = "hidden" th:value = "${movie.id}" name = "movieId" ></input>
+			      <button class="btn btn-default"  formaction = "/movieLikeSelected">Like this movie</button>
+			      </form>
+			      <!-- movie shortcut -->
+			      <a class="btn btn-default" th:href="@{../moviePage(movieId=${movie.id})}" >View Movie Page</a>
+		  	  </div>
+		    
 		    </div>
 		 <!--  </div>--> 
 	  </div><!-- end movie creation loop -->

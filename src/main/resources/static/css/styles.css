@@ -58,6 +58,12 @@ input {
 	color:black;
 	width: 400px;
 }
+#carousel-button-sequence{
+	padding:10px;
+	position: absolute;
+	left:400px;
+	top:300px;
+}
 .jumbotron{
 	background:grey;
 }
