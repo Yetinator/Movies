@@ -26,10 +26,11 @@ import rando.yetinator.movies.ConfigData;
 public class MovieService {
 	
 	//Responses from API (relevant)
-	//Boolean adult;
+	protected Boolean adult;
 	protected String backdrop_path;
 	//int budget;
-	//int genres[]; //genre ids and also titles
+	protected int[] genreIds; //genre ids and also titles
+	protected String genreNames[];
 	protected String homepage;
 	protected int id;//tmbd id
 	//String imdb_id;
@@ -83,20 +84,12 @@ public class MovieService {
 		JSONObject jsonObject = new JSONObject(JsonInput);
 		JSONArray Objects = (JSONArray) jsonObject.get("results");
 		JSONObject firstObject= (JSONObject) Objects.get(0);
-		//JSONObject obj = new JSONObject(results);
-		System.out.println(firstObject);
-		System.out.println(firstObject.get("title"));
-		//System.out.println("the results are " + firstObject.getJSONObject("results"));
 		
 		Object results = (JSONObject) jsonObject.query("results");
 		
 		
 		Map obj = parser.parseMap(JsonInput);
-		//System.out.println(obj.get("results"));
-		//Map obj = parser.parseMap(obj1.get("results").toString());
-		//System.out.println(obj.get("results"));
-		
-		
+
 		this.backdrop_path = obj.get("backdrop_path").toString();
 		this.homepage = obj.get("homepage").toString();
 		this.id = Integer.parseInt(obj.get("id").toString());
@@ -106,6 +99,8 @@ public class MovieService {
 		this.runtime = Integer.parseInt(obj.get("runtime").toString());
 		this.status = obj.get("status").toString();
 		this.title = obj.get("title").toString();
+		this.adult = (Boolean) obj.get("adult");
+		//setGenre();
 	}
 	
 	
@@ -133,9 +128,49 @@ public class MovieService {
 		this.runtime = Integer.parseInt(obj.get("runtime").toString());
 		this.status = obj.get("status").toString();
 		this.title = obj.get("title").toString();
+		this.adult = (Boolean) obj.get("adult");
+		setGenre(obj);
+		
 	}
 	
-	
+	protected void setGenre(JSONObject obj){
+		//creates the genre settings for the constructor for both id and title
+		//parser setup
+		JsonParser parser = new JsonJsonParser();
+		//parse genres
+		JSONArray jsonGenreArray = obj.getJSONArray("genres");
+		this.genreIds = new int[jsonGenreArray.length()];
+		this.genreNames = new String[jsonGenreArray.length()];
+		//JSONObject t = jsonGenreArray.getJSONObject(0);
+		for(int i = 0; i < jsonGenreArray.length(); i ++){
+			
+			JSONObject JSONGenreObject = jsonGenreArray.getJSONObject(i);
+			//name and id here
+			int id = (int) JSONGenreObject.get("id");
+			String name = JSONGenreObject.get("name").toString();
+			//please ad id to this.int[] genreIds;
+			this.genreIds[i] = id;
+			this.genreNames[i] = name;
+			
+		}
+//		
+//		JSONArray JSONGenreIds = (JSONArray) JSONGenreObject.get("id");
+//		System.out.println(JSONGenreIds);
+//		//JSONObject jsonObject = new JSONObject(JsonInput);
+//		//JSONArray Objects = (JSONArray) jsonObject.get("results");
+//		
+//		
+//		//Map genreObj = parser.parseMap(JSONGenreString);
+//		System.out.println(JSONGenreIds.toString());
+//		this.genreIds = new int[JSONGenreIds.length()];
+//		for(int i = 0; i < genreIds.length; i++){
+//				//Integer.parseInt(genreObj.get("id"));
+//				this.genreIds[i] = (int) JSONGenreIds.get(i);
+//				System.out.println(JSONGenreIds.get(i));
+//		}
+//		System.out.println("setGenre says: " + this.genreIds.toString());
+		
+	}
 	
 	
 	/**
@@ -144,9 +179,6 @@ public class MovieService {
 	public String getBackdrop_path() {
 		return backdrop_path;
 	}
-
-
-
 
 
 	/**
@@ -180,6 +212,17 @@ public class MovieService {
 	@Id
 	public int getId() {
 		return id;
+	}
+	public boolean getAdult() {
+		return adult;
+	}
+	
+	public int[] getGenreIds(){
+		return genreIds;
+	}
+	
+	public String[] getGenreNames(){
+		return genreNames;
 	}
 
 	/**
@@ -274,6 +317,7 @@ public class MovieService {
 	}
 
 	//Test function
+	/*
 	public void parseSomething(String JsonString){
 		JsonParser parser = new JsonJsonParser();
 		
@@ -288,7 +332,9 @@ public class MovieService {
 		
 		
 	}
+	*/
 	//Test function
+	/*
 	public static String testSomething(String... params){
 		//from youtube https://www.youtube.com/watch?v=lkbclq2nyfk
 		try {
@@ -321,17 +367,11 @@ public class MovieService {
 			return null;
 		}
 	}
-	
+	*/
 	public static int[] allMoviesOfName(String movieName){
-		
-		
 		//setup
 		String JsonInput = MovieService.accessDbByName(movieName);
 		JsonParser parser = new JsonJsonParser();
-		
-		//alternate parser?
-		//Map obj = parser.parseMap(JsonInput);
-		
 		//JSONObject implementation Create an array of results called Objects
 		JSONObject jsonObject = new JSONObject(JsonInput);
 		JSONArray Objects = (JSONArray) jsonObject.get("results");
@@ -341,19 +381,7 @@ public class MovieService {
 		for(int i = 0; i < Objects.length(); i++){
 			//create a loop object to append
 			JSONObject loopObject = Objects.getJSONObject(i);
-			
-			
 			String idLocal = loopObject.get("id").toString();
-		
-		
-			//still need to parse the object and append
-			/*
-			System.out.println("this is befor object" + idLocal);
-			MovieService localObject = new MovieService(idLocal);
-			System.out.println("made an object" + localObject.getTitle() + localObject.getId());
-			//add to theList
-			theList[i] = localObject;
-			*/
 			
 			//just pass back the ids
 			theList[i] = Integer.parseInt(loopObject.get("id").toString());
@@ -370,8 +398,6 @@ public class MovieService {
 		String APIKey = data.getApiKey();
 		String queryUrl = "&query=";
 		String urlFinished = url + APIKey + queryUrl + movieName;
-		
-		
 		try {
 			//create client object
 			OkHttpClient client = new OkHttpClient();
@@ -380,23 +406,14 @@ public class MovieService {
 			RequestBody postData = new FormBody.Builder()
 					.add("type", "json")
 					.build();
-			
-			
-			
 			okhttp3.Request request = new okhttp3.Request.Builder()
 					.url(urlFinished)
 					.get()
 					.build();
-			
 			//transport request wait for response
 			Response response = client.newCall(request).execute();
 			String result = response.body().string();
-			
-			
 			return result;
-			
-			
-			
 		}catch(Exception e){
 			System.out.println("There was a problem accessing JSON Data by name in MovieService.");
 			return null;
@@ -410,8 +427,6 @@ public class MovieService {
 		String APIKey = data.getApiKey();
 		String midurl = "?api_key=";
 		String urlFinished = url +  movieId + midurl + APIKey;
-		
-		
 		try {
 			//create client object
 			OkHttpClient client = new OkHttpClient();
@@ -420,9 +435,6 @@ public class MovieService {
 			RequestBody postData = new FormBody.Builder()
 					.add("type", "json")
 					.build();
-			
-			
-			
 			okhttp3.Request request = new okhttp3.Request.Builder()
 					.url(urlFinished)
 					.get()
@@ -431,12 +443,7 @@ public class MovieService {
 			//transport request wait for response
 			Response response = client.newCall(request).execute();
 			String result = response.body().string();
-			
-			
 			return result;
-			
-			
-			
 		}catch(Exception e){
 			System.out.println("bad waldo");
 			return null;

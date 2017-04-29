@@ -62,14 +62,15 @@ public class PostMovieController extends AbstractController{
 		String title = arequest.getParameter("movieTitle");
 		//I need to create an array of MovieService objects to pass into my movieConfirm page for selection
 		
+		//Create list of all movies of the same name
 		int[] movieNumbers = MovieService.allMoviesOfName(title);
 		MovieService[] movies = new MovieService[movieNumbers.length]; 
 		for(int i = 0; i < movies.length; i++){
 			movies[i] = new MovieService(movieNumbers[i]);
 			
 		}
-		
-		MovieService tempMovie = new MovieService(155);
+		//ChangedThingy
+		//MovieService tempMovie = new MovieService(155);
 		ConfigData data = new ConfigData();
 		
 		String imageBaseUrl = data.getImageBaseURL(0);

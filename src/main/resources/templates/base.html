@@ -84,7 +84,20 @@
 		
 			<p th:text="${movie.overview}" >Movie description here
 			</p>
-			</div>
+				<div ><!-- begin genre div -->
+					<!-- genres -->
+					<h3>These are the genres</h3>
+					<p th:each="name : ${movie.genreNames}" th:text="${name}"></p>
+				</div><!-- end genre div -->
+				<div>
+					<h3>The release Date </h3>
+					<p th:text="${movie.release_date}"></p>
+				</div>
+				<div>
+					<h3>Released yet?</h3>
+					<p th:text="${movie.status}"></p>
+				</div>
+			</div><!-- end this column for movie title/overview -->
 			
 			<div class="clearfix"></div>
 			<!-- <script type="text/javascript">"${movieTemplateTitle}"</script> -->

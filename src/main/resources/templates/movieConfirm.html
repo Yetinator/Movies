@@ -8,6 +8,7 @@
 	<!-- movies loop to display movies of same title -->
     <div th:each = "movie : ${movies}" class="jumbotron">
   	<div th:replace = "base :: smallMovieDisplay"></div>
+  	<p th:text="'Movie rating adult?: ' + ${movie.adult}"></p>
   	<form method = "post" >
   		<input type = "hidden" th:value = "${movie.id}" name = "movieId" ></input>
   		<button class = "btn btn-default" formaction = "/movieLikeSelected">Like this movie</button>
